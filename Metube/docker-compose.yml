@@ -1,0 +1,16 @@
+version: "3"
+services:
+  metube:
+    image: ghcr.io/alexta69/metube
+    container_name: metube
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - YTDL_OPTIONS={"cookiefile":"/cookies/cookies-youtube-com.txt"}
+    volumes:
+      - /media/gentran/GenVideos/Videos:/downloads
+      - ./cookies-youtube-com.txt:/cookies/cookies-youtube-com.txt
