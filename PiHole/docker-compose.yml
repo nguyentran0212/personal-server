@@ -4,7 +4,9 @@ services:
   pihole:
     image: pihole/pihole:latest
     labels:
-      - "traefik.http.routers.pihole.rule=Host(`pi.hole`)"
+      - traefik.enable=true
+      - "traefik.http.routers.pihole.rule=Host(`pihole.bunbun.home`)"
+      - 'traefik.http.services.pihole.loadbalancer.server.port=80'
     ports:
       - '53:53/tcp'
       - '53:53/udp'
@@ -19,6 +21,9 @@ services:
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     environment:
       FTLCONF_LOCAL_IPV4: 192.168.8.2
       WEBPASSWORD: 'test_pihole'
@@ -30,3 +35,5 @@ services:
       - 'pihole pihole.bunbun.home:192.168.8.2'
       - 'whoami whoami.bunbun.home:192.168.8.2'
     restart: always
+    networks:
+      - traefik-net
