@@ -49,7 +49,9 @@ services:
   pihole:
     image: pihole/pihole:latest
     labels:
-      - "traefik.http.routers.pihole.rule=Host(`pi.hole`)"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.bunbun.home`)"
+    networks:
+      - frontend
     ports:
       - '53:53/tcp'
       - '53:53/udp'
@@ -79,6 +81,7 @@ services:
       - 'whoami whoami.bunbun.home:192.168.8.2'
       - 'project project.bunbun.home:192.168.8.2'
       - 'media media.bunbun.home:192.168.8.2'
+      - 'metube metube.bunbun.home:192.168.8.2'
     restart: always
 
   whoami:
@@ -182,7 +185,7 @@ services:
     image: jellyfin/jellyfin
     labels:
       - "traefik.http.routers.jellyfin.rule=Host(`media.bunbun.home`)"
-      - "traefik.http.services.<service_name>.loadbalancer.server.port=8096"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
     user: 1000:1000
     volumes:
       - ./.jellyfin/config:/config
@@ -195,5 +198,22 @@ services:
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    networks:
+      - frontend
+
+  metube:
+    image: ghcr.io/alexta69/metube
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
+    labels:
+      - "traefik.http.routers.metube.rule=Host(`metube.bunbun.home`)"
+      - "traefik.http.services.metube.loadbalancer.server.port=8081"
+    environment:
+      - YTDL_OPTIONS={"cookiefile":"/cookies/cookies-youtube-com.txt"}
+    volumes:
+      - /media/gentran/GenVideos/Videos:/downloads
+      - ./cookies-youtube-com.txt:/cookies/cookies-youtube-com.txt
     networks:
       - frontend
