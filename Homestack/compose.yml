@@ -1,5 +1,6 @@
 version: '3'
 
 include:
-  - ../Traefik/docker-compose.yml ## Traefik reverse proxy
-  - ../PiHole/docker-compose.yml ## Pihole DNS server and ad blocker
+  - ../Traefik/docker-compose.yml ## Traefik: reverse proxy
+  - ../PiHole/docker-compose.yml ## Pihole: DNS server and ad blocker
+  - ../Metube/docker-compose.yml ## Metube: YouTube downloader

@@ -2,7 +2,6 @@ version: "3"
 services:
   metube:
     image: ghcr.io/alexta69/metube
-    container_name: metube
     dns:
       - 127.0.0.1
       - 1.1.1.1
@@ -11,6 +10,12 @@ services:
       - "8081:8081"
     environment:
       - YTDL_OPTIONS={"cookiefile":"/cookies/cookies-youtube-com.txt"}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.metube.rule=Host(`${METUBE_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+      - "traefik.http.services.metube.loadbalancer.server.port=8081"
     volumes:
-      - /media/gentran/GenVideos/Videos:/downloads
-      - ./cookies-youtube-com.txt:/cookies/cookies-youtube-com.txt
+      - ${METUBE_LOCAL_DOWNLOAD_DIR}:/downloads
+      - ${METUBE_COOKIE_TXT_PATH}:/cookies/cookies-youtube-com.txt
+    networks:
+      - traefik-net

@@ -33,7 +33,8 @@ services:
       # LAN hostnames for other docker containers using nginx-proxy
       - 'bunbun.home:192.168.8.2'
       - 'pihole pihole.bunbun.home:192.168.8.2'
-      - 'whoami whoami.bunbun.home:192.168.8.2'
+      - 'media media.bunbun.home:192.168.8.2'
+      - 'metube metube.bunbun.home:192.168.8.2'
     restart: always
     networks:
       - traefik-net
