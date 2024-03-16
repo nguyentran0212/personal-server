@@ -5,7 +5,7 @@ services:
     image: pihole/pihole:latest
     labels:
       - traefik.enable=true
-      - "traefik.http.routers.pihole.rule=Host(`pihole.bunbun.home`)"
+      - "traefik.http.routers.pihole.rule=Host(`${PIHOLE_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
       - 'traefik.http.services.pihole.loadbalancer.server.port=80'
     ports:
       - '53:53/tcp'
@@ -26,7 +26,7 @@ services:
       - 1.1.1.1
     environment:
       FTLCONF_LOCAL_IPV4: 192.168.8.2
-      WEBPASSWORD: 'test_pihole'
+      WEBPASSWORD: '${PIHOLE_WEB_PASSWORD}'
     extra_hosts:
       # Resolve to nothing domains (terminate connection)
       - 'nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0'
