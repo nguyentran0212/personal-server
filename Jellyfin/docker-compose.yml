@@ -2,13 +2,15 @@ version: '3.5'
 services:
   jellyfin:
     image: jellyfin/jellyfin
-    container_name: jellyfin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`${JELLYFIN_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
     user: 1000:1000
-    network_mode: 'host'
     volumes:
-      - ./jellyfin/config:/config
-      - ./jellyfin/cache:/cache
-      - /media/gentran/GenVideos/:/media:ro
+      - ./.jellyfin/config:/config
+      - ./.jellyfin/cache:/cache
+      - ${JELLYFIN_LOCAL_MEDIA_DIR}:/media
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
     environment:
@@ -16,3 +18,5 @@ services:
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    networks:
+      - traefik-net
