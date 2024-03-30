@@ -5,3 +5,4 @@ include:
   - ../PiHole/docker-compose.yml ## Pihole: DNS server and ad blocker
   - ../Metube/docker-compose.yml ## Metube: YouTube downloader
   - ../Jellyfin/docker-compose.yml ## Jellyfin: Media server
+  - ../Mealie/compose.yaml ## Mealie: Menu planner server
