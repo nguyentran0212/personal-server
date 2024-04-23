@@ -30,61 +30,23 @@ x-op-app: &app
     - "${OPDATA:-opdata}:/var/openproject/assets"
 
 services:
-  reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:v2.11
-    # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
-    ports:
-      # The HTTP port
-      - "80:80"
-      # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - frontend
-      
-  pihole:
-    image: pihole/pihole:latest
-    labels:
-      - "traefik.http.routers.pihole.rule=Host(`pi.hole`)"
-    ports:
-      - '53:53/tcp'
-      - '53:53/udp'
-      - "67:67/udp"
-      - '8053:80/tcp'
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
-    volumes:
-      - './etc-pihole:/etc/pihole'
-      - './etc-dnsmasq.d:/etc/dnsmasq.d'
-      # run `touch ./var-log/pihole.log` first unless you like errors
-      # - './var-log/pihole.log:/var/log/pihole/pihole.log'
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
-    environment:
-      FTLCONF_LOCAL_IPV4: 192.168.8.2
-      WEBPASSWORD: 'test_pihole'
-    extra_hosts:
-      # Resolve to nothing domains (terminate connection)
-      - 'nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0'
-      # LAN hostnames for other docker containers using nginx-proxy
-      - 'bunbun.home:192.168.8.2'
-      - 'pihole pihole.bunbun.home:192.168.8.2'
-      - 'whoami whoami.bunbun.home:192.168.8.2'
-      - 'project project.bunbun.home:192.168.8.2'
-    restart: always
-
-  whoami:
-    # A container that exposes an API to show its IP address
-    image: traefik/whoami
-    labels:
-      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+  # reverse-proxy:
+  #   # The official v2 Traefik docker image
+  #   image: traefik:v2.11
+  #   # Enables the web UI and tells Traefik to listen to docker
+  #   command: --api.insecure=true --providers.docker
+  #   ports:
+  #     # The HTTP port
+  #     - "80:80"
+  #     # The HTTP port
+  #     - "443:443"
+  #     # The Web UI (enabled by --api.insecure=true)
+  #     - "8080:8080"
+  #   volumes:
+  #     # So that Traefik can listen to the Docker events
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   networks:
+  #     - frontend
 
   db:
     image: postgres:13
@@ -107,8 +69,8 @@ services:
   proxy:
     <<: [*image, *restart_policy]
     command: "./docker/prod/proxy"
-    # ports:
-    #   - "${PORT:-8080}:80"
+    ports:
+      - "${PORT:-8080}:80"
     environment:
       APP_HOST: web
       OPENPROJECT_RAILS__RELATIVE__URL__ROOT: "${OPENPROJECT_RAILS__RELATIVE__URL__ROOT:-}"
@@ -117,7 +79,14 @@ services:
     networks:
       - frontend
     labels:
-      - "traefik.http.routers.open_project.rule=Host(`project.bunbun.home`)"
+      - "traefik.http.routers.open_project.rule=Host(`needlessly-optimal-labrador.ngrok-free.app`)"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolallowmethods=GET,OPTIONS,PUT"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.testheader.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.testheader.headers.addvaryheader=true"
+      - "traefik.http.middlewares.testHeader.headers.framedeny=true"
+      - "traefik.http.middlewares.testHeader.headers.browserxssfilter=true"
+      - "traefik.http.routers.open_project.middlewares=testHeader@docker"
       # - "traefik.http.routers.open_project_LAN.rule=Host(`gentran-aspire-s5-371t.local`)"
       # - "traefik.http.routers.open_project_LAN.rule=PathPrefix(`/project`)"
       
