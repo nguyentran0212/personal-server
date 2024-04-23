@@ -13,3 +13,10 @@ Some important notes:
 - Disable the stub listener on Ubuntu, otherwise the container would not be able to bind to port 53
 
 > Modern releases of Ubuntu (17.10+) and Fedora (33+) include systemd-resolved which is configured by default to implement a caching DNS stub resolver. This will prevent pi-hole from listening on port 53. The stub resolver should be disabled with: sudo sed -r -i.orig 's/#?DNSStubListener=yes/DNSStubListener=no/g' /etc/systemd/resolved.conf. This will not change the nameserver settings, which point to the stub resolver thus preventing DNS resolution. Change the /etc/resolv.conf symlink to point to /run/systemd/resolve/resolv.conf, which is automatically updated to follow the system's netplan: sudo sh -c 'rm /etc/resolv.conf && ln -s /run/systemd/resolve/resolv.conf /etc/resolv.conf' After making these changes, you should restart systemd-resolved using systemctl restart systemd-resolved
+
+## Instructions
+
+1. Create `.env` by making a copy of `default.env`
+2. Change the `PIHOLE_DOMAIN` and `PIHOLE_WEB_PASSWORD` in the newly created `.env`
+3. Run `docker compose up -d` in the `../Homestack`
+4. When the stack starts correctly, pihole admin console would be available at `${PIHOLE_DOMAIN}.${HOME_SERVER_DOMAIN}`

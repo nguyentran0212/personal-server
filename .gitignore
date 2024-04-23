@@ -1,2 +1,4 @@
 */etc-dnsmasq.d
 */etc-pihole
+**/.jellyfin
+**/cookie*
