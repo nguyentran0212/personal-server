@@ -6,3 +6,4 @@ include:
   - ../Metube/docker-compose.yml ## Metube: YouTube downloader
   - ../Jellyfin/docker-compose.yml ## Jellyfin: Media server
   - ../Mealie/compose.yaml ## Mealie: Menu planner server
+  - ../CodeServer/compose.yaml ## Codeserver

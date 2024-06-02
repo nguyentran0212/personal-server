@@ -1,0 +1,23 @@
+---
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Adelaide
+      - PROXY_DOMAIN=`${CODESERVER_DOMAIN}.${HOME_SERVER_DOMAIN}`
+      - DEFAULT_WORKSPACE=/config/workspace #optional
+    volumes:
+      - /path/to/appdata/config:/config
+      - ${CODE_LOCAL_DIR}:/Documents
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.codeserver.rule=Host(`${CODESERVER_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+      - "traefik.http.services.codeserver.loadbalancer.server.port=8443"
+    ports:
+      - 8443:8443
+    restart: unless-stopped
+    networks:
+      - traefik-net
