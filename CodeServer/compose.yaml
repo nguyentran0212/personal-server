@@ -9,6 +9,9 @@ services:
       - TZ=Australia/Adelaide
       - PROXY_DOMAIN=`${CODESERVER_DOMAIN}.${HOME_SERVER_DOMAIN}`
       - DEFAULT_WORKSPACE=/config/workspace #optional
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     volumes:
       - /path/to/appdata/config:/config
       - ${CODE_LOCAL_DIR}:/Documents
