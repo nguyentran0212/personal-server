@@ -35,6 +35,8 @@ services:
       - 'pihole pihole.bunbun.home:192.168.8.2'
       - 'media media.bunbun.home:192.168.8.2'
       - 'metube metube.bunbun.home:192.168.8.2'
+      - 'mealie mealie.bunbun.home:192.168.8.2'
+      - 'codeserver codeserver.bunbun.home:192.168.8.2'
     restart: always
     networks:
       - traefik-net

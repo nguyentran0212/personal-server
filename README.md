@@ -1,45 +1,44 @@
-# Dev Box setup process
+# My Server Stack
 
-Content of the Dev Box:
-- Docker
-- ngrok
-- DroneCI
+This repository contains the configuration and environment files to start my homelab and work stack. Each service runs as a Docker container. A Traefik reverse proxy is used as the entry point to the stack.
 
-# Procedure
+## How to add new service
 
-## Ngrok
+You need to ensure that the following conditions are met:
 
-```sh
-curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
-  | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
-  | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok
+Add labels to docker compose file of the new service so that it would be recognized by Traefik
+
+```yaml
+labels:
+  - "traefik.enable=true"
+  - "traefik.http.routers.<servicename>.rule=Host(`${SERVICE_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+  - "traefik.http.services.<servicename>.loadbalancer.server.port=8443"
 ```
 
-```sh
-ngrok config add-authtoken 1mVBKhzcTMlRbXz40B41uZMkYKD_21VzwtQXX8RuLgUZ6Vrip
+Connect the new service to the traefik network by adding this network to the docker compose of the new service
+
+```yaml
+networks:
+  - traefik-net
 ```
 
-## DroneCI
+Add the full domain name to the extra hosts field in the `docker-compose.yml` of PiHole so that the domain name would be routed to the right IP
 
-```sh
-# Create shared secret between Drone server and Drone worker
-openssl rand -hex 16
+```yaml
+extra_hosts:
+  - 'service service.domain:ip_address'
+```
 
-# Download server container
-docker pull drone/drone:2
+Include the Docker compose of the new service to the docker compose of the stack
 
-# Configure and launch server
-docker run \
-  --volume=/var/lib/drone:/data \
-  --env=DRONE_GITHUB_CLIENT_ID=your-id \
-  --env=DRONE_GITHUB_CLIENT_SECRET=super-duper-secret \
-  --env=DRONE_RPC_SECRET=super-duper-secret \
-  --env=DRONE_SERVER_HOST=drone.company.com \
-  --env=DRONE_SERVER_PROTO=https \
-  --publish=80:80 \
-  --publish=443:443 \
-  --restart=always \
-  --detach=true \
-  --name=drone \
-  drone/drone:2
+```yaml
+version: '3'
+
+include:
+  - ../Traefik/docker-compose.yml ## Traefik: reverse proxy
+  - ../PiHole/docker-compose.yml ## Pihole: DNS server and ad blocker
+  - ../Metube/docker-compose.yml ## Metube: YouTube downloader
+  - ../Jellyfin/docker-compose.yml ## Jellyfin: Media server
+  - ../Mealie/compose.yaml ## Mealie: Menu planner server
+  - ../CodeServer/compose.yaml ## Codeserver
 ```
