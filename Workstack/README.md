@@ -4,7 +4,7 @@ Stack of services for work. Right now, there is only OpenProject running on port
 
 Limitation: There is no reverse proxy setup before the OpenProject, so I cannot run another service on this machine and expose it via the same domain name, at least not that I know how to do it. 
 
-Use the following command to start ngrok and point to the edge that I have setup: `ngrok tunnel --label edge=edghts_2dFlBy5qfL5ALzVshKOKG1tGOMS http://localhost:8080`
+Use the following command to start ngrok and point to the edge that I have setup: `ngrok tunnel --label edge=edghts_2dFlBy5qfL5ALzVshKOKG1tGOMS http://localhost:9000`
 
 Todo:
 
