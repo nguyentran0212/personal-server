@@ -1,0 +1,8 @@
+version: '3'
+
+include:
+  - path: ../Apps/Traefik/docker-compose.yml ## Traefik: reverse proxy
+
+networks:
+  traefik-net: # Traefik network connecting internal apps to the reverse proxy
+  macvlan-net: # MAC Vlan network to expose container on LAN so that it can reach other computers on LAN

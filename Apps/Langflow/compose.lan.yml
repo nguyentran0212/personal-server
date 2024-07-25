@@ -1,0 +1,45 @@
+services:
+  langflow:
+    image: langflowai/langflow:latest
+    depends_on:
+      - langflow-postgres
+    environment:
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@langflow-postgres:5432/langflow
+      # This variable defines where the logs, file storage, monitor data and secret keys are stored.
+    volumes:
+      - langflow-data:/app/langflow
+    restart: unless-stopped
+    networks:
+      - traefik-net
+      - macvlan
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.localhost`)"
+      # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=PORT" # Add this line if traefik cannot detect the port of this container
+
+
+  langflow-postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: langflow
+      POSTGRES_PASSWORD: langflow
+      POSTGRES_DB: langflow
+    volumes:
+      - langflow-postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+    #   - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.localhost`)"
+      # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=PORT" # Add this line if traefik cannot detect the port of this container
+
+volumes:
+  langflow-postgres:
+  langflow-data:

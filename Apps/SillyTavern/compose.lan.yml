@@ -1,0 +1,24 @@
+services:
+  sillytavern:
+    image: ghcr.io/sillytavern/sillytavern:latest
+    environment:
+      TZ: ${HOME_SERVER_TZ}
+    volumes:
+      - silly-tavern-plugins:/home/node/app/plugins
+      - ./config:/home/node/app/config
+      - silly-tavern-data:/home/node/app/data
+    restart: unless-stopped
+    networks:
+      - macvlan
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.localhost`)"
+      # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=PORT"
+
+volumes:
+  silly-tavern-data:
+  silly-tavern-plugins:

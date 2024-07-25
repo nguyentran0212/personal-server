@@ -2,6 +2,17 @@
 
 This repository contains the configuration and environment files to start my homelab and work stack. Each service runs as a Docker container. A Traefik reverse proxy is used as the entry point to the stack.
 
+## Environment Variables
+
+### Stack-level Variables
+
+These variables would be common across all applications deployed within one stack, and different between different stacks. 
+
+- HOME_SERVER_DOMAIN: top level domain of the whole stack
+- HOME_SERVER_TZ: timezone code to be applied to all apps in the stack
+
+
+
 ## How to add new service
 
 You need to ensure that the following conditions are met:

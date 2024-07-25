@@ -1,0 +1,31 @@
+services:
+  gpt-researcher:
+    image: gentran1991/gpt-researcher:0.3.1
+    environment: 
+      # Use ollama for both, LLM and EMBEDDING provider
+      LLM_PROVIDER=: ollama
+      # Ollama endpoint to use
+      OLLAMA_BASE_URL: ${GPT_RESEARCHER_OLLAMA_URL}
+      # Specify one of the LLM models supported by Ollama
+      FAST_LLM_MODEL: ${GPT_RESEARCHER_OLLAMA_FAST_MODEL}
+      # Specify one of the LLM models supported by Ollama 
+      SMART_LLM_MODEL: ${GPT_RESEARCHER_OLLAMA_SMART_MODEL}
+      # Specify one of the embedding models supported by Ollama 
+      OLLAMA_EMBEDDING_MODEL: ${GPT_RESEARCHER_OLLAMA_EMBEDDING_MODEL}
+      # The temperature to use, defaults to 0.55
+      TEMPERATURE: 0.55
+      # Retriever set to Searx
+      RETRIEVER: searx
+      # URL of searx server
+      SEARX_URL: ${SEARXNG_URL}
+    restart: unless-stopped
+    networks:
+      - traefik-net
+      - macvlan-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.localhost`)"
+      # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=PORT" # Add this line if traefik cannot detect the port of this container
