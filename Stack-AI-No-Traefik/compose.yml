@@ -1,10 +1,9 @@
 version: '3'
 
 include:
-  - path: ../Apps/Traefik/docker-compose.yml ## Traefik: reverse proxy
-  - path: ../Apps/SillyTavern/compose.lan.yml
-  - path: ../Apps/OpenWebUI/compose.lan.yml
-  # - path: ../Apps/Searxng/compose.lan.yml
+  - path: ../Apps/SillyTavern/compose.no.traefik.yml
+  - path: ../Apps/OpenWebUI/compose.no.traefik.yml
+  - path: ../Apps/Searxng/compose.yml
   # - path: ../Apps/Langflow/compose.yml
   # - path: ../Apps/GPT-Researcher/compose.yml
 

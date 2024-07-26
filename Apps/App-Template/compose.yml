@@ -12,9 +12,8 @@ services:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
-      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.localhost`)"
-      # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=PORT" # Add this line if traefik cannot detect the port of this container
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
 
 volumes:
   open-webui:

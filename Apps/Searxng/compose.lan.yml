@@ -4,6 +4,8 @@ services:
     volumes:
       - ./searxng:/etc/searxng
     restart: unless-stopped
+    # ports:
+    #   - 8080:8080
     networks:
       - traefik-net
     extra_hosts:
@@ -12,3 +14,4 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}" # Add this line if traefik cannot detect the port of this container
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"

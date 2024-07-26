@@ -1,7 +1,14 @@
-# Start template for defining a stack
+# AI stack powered by a LAN Ollama instance
 
-This directory contains a template for defining and running a container stack. 
+NOTE: NOT WORKING WITH MY NUC BOX AT THE MOMENT
 
-## Instructions
+This stack contains AI apps that interacts with an Ollama instance running on a different machine via LAN. All apps would interact with Ollama via `OLLAMA_BASE_URL`
 
-1. Create environment file: `cp .env.default .env`
+Services:
+- `openwebui.ai.local`: Open WebUI
+- `sillytavern.ai.local`: Silly Tavern AI
+- `searxng.ai.local`: Searxng (for both independent use and OpenWebUI)
+
+Additional instructions: 
+- Add the following line `ip-of-server-stack *.ai.local` to the `/etc/hosts` file of all client machines who want to use the stack so that all the subdomains above would be routed correctly
+- Add the following line `127.0.0.1 *.localhost` to the `/etc/hosts` file of all client machines who want to use the stack so that all the subdomains above would be routed correctly
