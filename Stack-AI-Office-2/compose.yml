@@ -5,9 +5,8 @@ include:
   - path: ../Apps/SillyTavern/compose.yml
   - path: ../Apps/OpenWebUI/compose.yml
   - path: ../Apps/Searxng/compose.yml
-  - path: ../Apps/Langflow/compose.yml
-  - path: ../Apps/GPT-Researcher/compose.yml
-  - path: ../Apps/AnythingLLM/compose.yml
+  # - path: ../Apps/Langflow/compose.yml
+  # - path: ../Apps/GPT-Researcher/compose.yml
 
 networks:
   traefik-net: # Traefik network connecting internal apps to the reverse proxy

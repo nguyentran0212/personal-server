@@ -1,0 +1,22 @@
+services:
+  anything_llm:
+    image: mintplexlabs/anythingllm
+    volumes:
+      - anythingllm:/app/server/storage 
+      # - ./.env.anythingllm:/app/server/.env
+    # ports:
+    #   - "3001:3001"
+    cap_add:
+      - SYS_ADMIN 
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  anythingllm:
