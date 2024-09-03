@@ -2,7 +2,6 @@ version: '3'
 
 include:
   - path: ../Traefik/docker-compose.yml ## Traefik: reverse proxy
-  - path: ../Traefik/docker-compose.yml ## Traefik: reverse proxy
   - path: ../PiHole/docker-compose.yml ## Pihole: DNS server and ad blocker
   - path: ../Metube/docker-compose.yml ## Metube: YouTube downloader
   - path: ../Jellyfin/docker-compose.yml ## Jellyfin: Media server

@@ -21,7 +21,7 @@ services:
       - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=8686"
 networks:
   traefik-net:
