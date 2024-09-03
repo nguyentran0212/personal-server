@@ -11,3 +11,12 @@ services:
     ports:
       - "1194:1194/udp"
     restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.openvpn.rule=Host(`openvpn.localhost`)"
+      - "traefik.http.services.openvpn.loadbalancer.server.port=1194"
+networks:
+  traefik-net:
+    external: true

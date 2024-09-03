@@ -16,3 +16,12 @@ services:
       - "6881:6881"
       - "6881:6881/udp"
     restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.localhost`)"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+networks:
+  traefik-net:
+    external: true

@@ -15,3 +15,12 @@ services:
     ports:
       - "7878:7878"
     restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.localhost`)"
+      - "traefik.http.services.radarr.loadbalancer.server.port=7878"
+networks:
+  traefik-net:
+    external: true

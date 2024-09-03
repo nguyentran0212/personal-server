@@ -15,3 +15,12 @@ services:
     ports:
       - "8686:8686"
     restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lidarr.rule=Host(`lidarr.localhost`)"
+      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
+networks:
+  traefik-net:
+    external: true
