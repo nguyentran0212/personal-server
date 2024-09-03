@@ -18,10 +18,12 @@ services:
     restart: unless-stopped
     networks:
       - traefik-net
+    env_file:
+      - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.localhost`)"
-      - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=8080"
 networks:
   traefik-net:
     external: true

@@ -17,10 +17,12 @@ services:
     restart: unless-stopped
     networks:
       - traefik-net
+    env_file:
+      - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.localhost`)"
-      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=8989"
 networks:
   traefik-net:
     external: true
