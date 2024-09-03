@@ -11,3 +11,5 @@ include:
   - path: ../Apps/Sonarr/compose.yml ## Sonarr
   - path: ../Apps/Radarr/compose.yml ## Radarr
   - path: ../Apps/Lidarr/compose.yml ## Lidarr
+  - path: ../Apps/qBittorrent/compose.yml ## qBittorrent
+  - path: ../Apps/OpenVPN/compose.yml ## OpenVPN
