@@ -8,3 +8,6 @@ include:
   - path: ../Jellyfin/docker-compose.yml ## Jellyfin: Media server
   - path: ../Mealie/compose.yaml ## Mealie: Menu planner server
   - path: ../CodeServer/compose.yaml ## Codeserver
+  - path: ../Apps/Sonarr/compose.yml ## Sonarr
+  - path: ../Apps/Radarr/compose.yml ## Radarr
+  - path: ../Apps/Lidarr/compose.yml ## Lidarr
