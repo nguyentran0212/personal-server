@@ -3,3 +3,5 @@
 **/.jellyfin
 **/cookie*
 .aider*
+**/backup
+**/ngrok.log
