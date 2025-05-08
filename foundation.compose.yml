@@ -1,3 +1,7 @@
+version: '3.8' # Specify the version of the Compose file format
+
+services: # Define services, even if empty for now
+
 # Foundation stack contains the core networking components that would be used by any other stack:
 # - Traefik: reverse proxy
 
