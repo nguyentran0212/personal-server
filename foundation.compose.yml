@@ -1,12 +1,9 @@
-version: '3.8' # Specify the version of the Compose file format
-
 # Foundation stack contains the core networking components that would be used by any other stack:
 # - Traefik: reverse proxy
 # - DroneCI: continuous integration service
 
 include:
   - path: "./Apps/Traefik/docker-compose.yml" ## Traefik: reverse proxy
-  - path: "./Apps/DroneCI/docker-compose.yml" ## DroneCI: continuous integration service
 
 networks:
   traefik-net: # Traefik network connecting internal apps to the reverse proxy

@@ -1,0 +1,17 @@
+# Foundation stack contains the core networking components that would be used by any other stack:
+# - Traefik: reverse proxy
+# - DroneCI: continuous integration service
+
+include:
+  - path: "./foundation.compose.yml" ## Traefik: reverse proxy 
+  - path: ./Apps/OpenWebUI/compose.yml
+  # - path: .Apps/PiHole/docker-compose.yml ## Pihole: DNS server and ad blocker
+  # - path: .Apps/Metube/docker-compose.yml ## Metube: YouTube downloader
+  # - path: .Apps/Jellyfin/docker-compose.yml ## Jellyfin: Media server
+  # - path: .Apps/Mealie/compose.yaml ## Mealie: Menu planner server
+  # - path: .Apps/CodeServer/compose.yaml ## Codeserver
+  # - path: .Apps/Apps/Sonarr/compose.yml ## Sonarr
+  # - path: ./Apps/Radarr/compose.yml ## Radarr
+  # - path: ./Apps/Lidarr/compose.yml ## Lidarr
+  # - path: ./Apps/qBittorrent/compose.yml ## qBittorrent
+  # - path: ./Apps/OpenVPN/compose.yml ## OpenVPN
