@@ -28,15 +28,7 @@ services:
       FTLCONF_LOCAL_IPV4: 192.168.8.2
       WEBPASSWORD: '${PIHOLE_WEB_PASSWORD}'
     extra_hosts:
-      # Resolve to nothing domains (terminate connection)
-      - 'nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0'
-      # LAN hostnames for other docker containers using nginx-proxy
-      - 'bunbun.home:192.168.8.2'
-      - 'pihole pihole.bunbun.home:192.168.8.2'
-      - 'media media.bunbun.home:192.168.8.2'
-      - 'metube metube.bunbun.home:192.168.8.2'
-      - 'mealie mealie.bunbun.home:192.168.8.2'
-      - 'codeserver codeserver.bunbun.home:192.168.8.2'
+      - ${PIHOLE_EXTRA_HOSTS}
     restart: always
     networks:
       - traefik-net
