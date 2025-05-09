@@ -1,0 +1,22 @@
+services:
+  metube:
+    image: ghcr.io/alexta69/metube
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - YTDL_OPTIONS={"cookiefile":"/cookies/cookies-youtube-com.txt"}
+    volumes:
+      - ${METUBE_LOCAL_DOWNLOAD_DIR}:/downloads
+      # - ${METUBE_COOKIE_TXT_PATH}:/cookies/cookies-youtube-com.txt
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"

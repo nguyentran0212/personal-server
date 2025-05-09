@@ -1,0 +1,11 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../Foundation/compose.yml" ## Foundation stack 
+  # - path: "../Persistence/compose.yml" ## Data persistence stack 
+  # - path: ../Apps/App-Name-1/compose.yml ## App 1
+  # - path: ../Apps/App-Name-2/compose.yml ## App 2
+  - path: "../../Apps/App-Name-3/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/App-Name-3/default.env

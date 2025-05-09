@@ -1,9 +1,0 @@
-version: '3'
-services:
-  ollama:
-    image: ollama/ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ${OLLAMA_VOLUME}:/root/.ollama
-    restart: always

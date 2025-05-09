@@ -1,0 +1,9 @@
+# Foundation stack contains the core networking components that would be used by any other stack:
+# - Traefik: reverse proxy
+# - DroneCI: continuous integration service
+
+include:
+  - path: "../../Apps/Traefik/compose.yml" ## Traefik: reverse proxy
+
+networks:
+  traefik-net: # Traefik network connecting internal apps to the reverse proxy

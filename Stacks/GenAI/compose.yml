@@ -1,0 +1,8 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../Foundation/compose.yml" ## Foundation stack 
+  - path: "../../Apps/OpenWebUI/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/OpenWebUI/default.env
