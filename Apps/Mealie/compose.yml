@@ -1,7 +1,6 @@
 services:
   mealie:
     image: ghcr.io/mealie-recipes/mealie:v1.3.2 # 
-    container_name: mealie
     deploy:
       resources:
         limits:
