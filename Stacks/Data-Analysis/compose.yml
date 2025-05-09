@@ -3,6 +3,7 @@
 #
 include:
   - path: "../Foundation/compose.yml" ## Foundation stack 
+  - path: "../Persistence/compose.yml" ## Data storage layer
   - path: "../../Apps/Metabase/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/Metabase/default.env

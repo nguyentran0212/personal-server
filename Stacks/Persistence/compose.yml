@@ -1,0 +1,8 @@
+# Persistence layer provides data storage facility
+# - Postgres: Object relational database. Useful in general
+#
+#
+include:
+  - path: "../../Apps/Postgres/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Postgres/default.env
