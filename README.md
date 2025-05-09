@@ -53,3 +53,8 @@ include:
   - ../Mealie/compose.yaml ## Mealie: Menu planner server
   - ../CodeServer/compose.yaml ## Codeserver
 ```
+
+
+# Known errors / quirks
+
+If a container is connected to two networks (e.g., `traefik-net` and `app-specific-net`), traefik would not be able to reach the container with my current configuration. It seems traefik detects the IP address on the `app-specific-net`, but it tries to direct the traffic via `traefik-net` (or vice versa, neee more investigation). The result is always gateway timeout.
