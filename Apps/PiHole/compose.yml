@@ -22,12 +22,12 @@ services:
       FTLCONF_LOCAL_IPV4: 192.168.8.2
       WEBPASSWORD: '${PIHOLE_WEB_PASSWORD}'
     extra_hosts:
+      - "host.docker.internal:host-gateway"
       - ${PIHOLE_EXTRA_HOSTS}
     restart: always
     networks:
       - traefik-net
     extra_hosts:
-      - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
