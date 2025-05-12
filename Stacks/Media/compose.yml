@@ -2,10 +2,6 @@
 # It includes the foundation stack and other necessary applications
 #
 include:
-  - path: "../Foundation/compose.yml" ## Foundation stack 
-  # - path: "../Persistence/compose.yml" ## Data persistence stack 
-  # - path: ../Apps/App-Name-1/compose.yml ## App 1
-  # - path: ../Apps/App-Name-2/compose.yml ## App 2
   - path: "../../Apps/Metube/compose.yml" ## Youtube downloader
     env_file:
        - ../../Apps/Metube/default.env

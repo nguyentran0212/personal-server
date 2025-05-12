@@ -4,6 +4,9 @@
 
 include:
   - path: "../../Apps/Traefik/compose.yml" ## Traefik: reverse proxy
+  - path: "../../Apps/Portainer/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Portainer/default.env
 
 networks:
   traefik-net: # Traefik network connecting internal apps to the reverse proxy

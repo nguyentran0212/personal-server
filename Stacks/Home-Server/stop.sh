@@ -10,11 +10,11 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 
 # Start Docker Compose in detached mode with the specified env file
-docker-compose --env-file "$ENV_FILE" up -d
+docker-compose --env-file "$ENV_FILE" down
 
 # Optional: Confirm the services are started
 if [ $? -eq 0 ]; then
-    echo "Docker Compose started successfully in detached mode using '$ENV_FILE'."
+    echo "Docker Compose stops successfully."
 else
-    echo "Error starting Docker Compose."
+    echo "Error stopping Docker Compose."
 fi

@@ -33,12 +33,16 @@ services:
 
   postgres:
     image: postgres:latest
-    hostname: postgres
-    ports:
-      - 5432:5432
+    hostname: metabase-pg
+    volumes:
+      - metabase-pg-data:/var/lib/postgresql/data/
     environment:
       POSTGRES_USER: metabase
       POSTGRES_DB: metabaseappdb
       POSTGRES_PASSWORD: mysecretpassword
     networks:
       - traefik-net
+
+  
+volumes:
+  metabase-pg-data:

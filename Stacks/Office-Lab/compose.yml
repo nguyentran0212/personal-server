@@ -1,0 +1,15 @@
+# Current stack of software of my office. It contains the following sub-stacks:
+# - Foundation (routing and observability)
+# - Persistence (postgres database)
+# - Data-Analysis
+# - GenAI Apps
+
+name: ${STACK_NAME}
+
+include:
+  - path: "../Foundation/compose.yml" ## Foundation stack 
+  - path: "../Persistence/compose.yml" ## Data persistence stack 
+  - path: "../Data-Analysis/compose.yml" ## Data analysis stack 
+  - path: "../Media/compose.yml" ## Media stack
+  - path: "../GenAI-Apps/compose.yml" ## GenAI applications stack 
+  - path: "../GenAI-Tools/compose.yml" ## GenAI engineering tools stack 

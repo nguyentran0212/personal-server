@@ -1,9 +1,11 @@
-# Template for defining a new software stack.
-# It includes the foundation stack and other necessary applications
+# This stack creates a "lab" for working with data. It provides the utilities to inject and perform exploratory data analysis. The stack includes the following utilities:
+# - metabase (at metabase.localhost): no-code business intelligence tool
+# 
 #
 include:
-  - path: "../Foundation/compose.yml" ## Foundation stack 
-  - path: "../Persistence/compose.yml" ## Data storage layer
   - path: "../../Apps/Metabase/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/Metabase/default.env
+  - path: "../../Apps/Jupyter/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Jupyter/default.env

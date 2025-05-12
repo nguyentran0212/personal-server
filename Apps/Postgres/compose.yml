@@ -4,6 +4,8 @@ services:
     image: postgres
     hostname: persistence-pg
     restart: unless-stopped
+    volumes:
+      - persistence-pg-data:/var/lib/postgresql/data/
     networks:
       - traefik-net
     extra_hosts:
@@ -25,3 +27,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  persistence-pg-data:

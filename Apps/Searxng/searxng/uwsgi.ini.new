@@ -1,4 +1,8 @@
 [uwsgi]
+# Listening address
+# default value: [::]:8080 (see Dockerfile)
+http-socket = $(BIND_ADDRESS)
+
 # Who will run the code
 uid = searxng
 gid = searxng
@@ -17,7 +21,6 @@ chmod-socket = 666
 # Plugin to use and interpreter config
 single-interpreter = true
 master = true
-plugin = python3
 lazy-apps = true
 enable-threads = 4
 
@@ -48,7 +51,5 @@ die-on-term
 
 # uwsgi serves the static files
 static-map = /static=/usr/local/searxng/searx/static
-# expires set to one day
-static-expires = /* 86400
 static-gzip-all = True
 offload-threads = 4

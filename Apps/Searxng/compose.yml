@@ -1,6 +1,7 @@
 services:
   searxng:
     image: searxng/searxng:latest
+    hostname: searxng
     volumes:
       - ./searxng:/etc/searxng
     restart: unless-stopped

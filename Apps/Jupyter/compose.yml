@@ -1,24 +1,14 @@
 services:
-  sillytavern:
-    image: ghcr.io/sillytavern/sillytavern:latest
-    environment:
-      TZ: ${HOME_SERVER_TZ}
+  jupyter:
+    image: quay.io/jupyter/scipy-notebook:latest   # Specify the image
     volumes:
-      - silly-tavern-plugins:/home/node/app/plugins
-      - ./config:/home/node/app/config
-      - silly-tavern-data:/home/node/app/data
+      - "${JUPYTER_WORKDIR}:/home/jovyan/work"  # Bind mount the current directory
     restart: unless-stopped
     networks:
       - traefik-net
-      - macvlan-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
-      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
-
-volumes:
-  silly-tavern-data:
-  silly-tavern-plugins:
