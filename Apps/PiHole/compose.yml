@@ -6,9 +6,9 @@ services:
       - '53:53/udp'
       - "67:67/udp"
       - '8053:80/tcp'
-    volumes:
-      - './etc-pihole:/etc/pihole'
-      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    # volumes:
+      # - './etc-pihole:/etc/pihole'
+      # - './etc-dnsmasq.d:/etc/dnsmasq.d'
       # run `touch ./var-log/pihole.log` first unless you like errors
       # - './var-log/pihole.log:/var/log/pihole/pihole.log'
     # Recommended but not required (DHCP needs NET_ADMIN)
@@ -23,11 +23,16 @@ services:
       WEBPASSWORD: '${PIHOLE_WEB_PASSWORD}'
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - ${PIHOLE_EXTRA_HOSTS}
+      - "nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0"
+      - "bunbun.home:192.168.8.2"
+      - "pihole pihole.bunbun.home:192.168.8.2"
+      - "jellyfin jellyfin.bunbun.home:192.168.8.2"
+      - "metube metube.bunbun.home:192.168.8.2"
+      - "mealie mealie.bunbun.home:192.168.8.2"
+      - "codeserver codeserver.bunbun.home:192.168.8.2"
     restart: always
     networks:
       - traefik-net
-    extra_hosts:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
