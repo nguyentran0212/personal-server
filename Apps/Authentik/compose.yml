@@ -34,6 +34,7 @@ services:
       - redis:/data
   authentik-server:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
+    hostname: authentik
     restart: unless-stopped
     command: server
     environment:

@@ -1,15 +1,15 @@
 services:
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:v1.3.2 # 
+    image: ghcr.io/mealie-recipes/mealie:v2.8.0 # 
     deploy:
       resources:
         limits:
           memory: 1000M #
     ports:
       - 9999:9000
-    dns:
-      - 127.0.0.1
-      - 1.1.1.1
+    # dns:
+    #   - 127.0.0.1
+    #   - 1.1.1.1
     volumes:
       - mealie-data:/app/data/
     environment:
@@ -22,6 +22,13 @@ services:
       - MAX_WORKERS=1
       - WEB_CONCURRENCY=1
       - BASE_URL=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`
+      - OIDC_AUTH_ENABLED=true
+      - OIDC_SIGNUP_ENABLED=true
+      - OIDC_CLIENT_ID=yb6iWsSm724aGH4VPl3z7FVtQgByGCCHgmZuhK0i
+      - OIDC_CLIENT_SECRET=1234mealie
+      - OIDC_CONFIGURATION_URL=http://authentik:9000/application/o/mealie/.well-known/openid-configuration
+      - OIDC_AUTO_REDIRECT=true
+      - OIDC_REMEMBER_ME=true
     restart: unless-stopped
     networks:
       - traefik-net
