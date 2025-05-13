@@ -7,6 +7,9 @@ include:
   - path: "../../Apps/Portainer/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/Portainer/default.env
+  - path: "../../Apps/Authentik/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Authentik/default.env
 
 networks:
   traefik-net: # Traefik network connecting internal apps to the reverse proxy

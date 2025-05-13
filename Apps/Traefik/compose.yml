@@ -8,6 +8,8 @@ services:
       --providers.docker.exposedbydefault=false
       --entryPoints.web.address=:80
       --entryPoints.websecure.address=:443
+      --entryPoints.websecure.http.tls=true
+      # --log.level=TRACE
     restart: unless-stopped
     ports:
       # The HTTP port

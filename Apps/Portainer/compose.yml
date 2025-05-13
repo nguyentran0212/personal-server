@@ -19,8 +19,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
-      - "traefik.http.routers.${APP_NAME}.tls=true"
-      - "traefik.http.routers.${APP_NAME}.tls.options=default"
+      # - "traefik.http.routers.${APP_NAME}.tls=true"
+      # - "traefik.http.routers.${APP_NAME}.tls.options=default"
       - "traefik.http.routers.${APP_NAME}.entrypoints=websecure"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
 
