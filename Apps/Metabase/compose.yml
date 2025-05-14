@@ -1,6 +1,6 @@
 services:
   metabase:
-    image: metabase/metabase:v0.53.15
+    image: metabase/metabase:latest
     hostname: metabase
     volumes:
       - /dev/urandom:/dev/random:ro
