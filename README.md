@@ -1,8 +1,35 @@
-# My Server Stack
+# Server Craft
 
-This repository contains the configuration and environment files to start my homelab and work stack. Each service runs as a Docker container. A Traefik reverse proxy is used as the entry point to the stack.
+![logo](Assets/logo.jpg)
+
+A collection of composable recipes to deploy software stacks for your server.
+
+## Why
+
+Good software elevates us to be more insightful, knowledgeable, and productive. Thanks to the passion of the open source community, there is no shortage of good software. The real challenge is configuration, and integration. 
+
+Say, you are tasked with analysing some experiment data to generate a detailed report and you don't think the plain old Excel spreadsheet can cope with the scale of your data and the complexity of your analysis. Naturally, you would turn to Python or a powerful business intelligence tool. Thanks to open source and software container technologies like Docker, it's so easy to spin up an instance of Jupyter notebook or Metabase in 5 minutes, including the download time.  
+
+But why stop there? To supply your new tools with data, you would need one (or a few) databases. Now that you have databases, it's no harm to setup some sorts of workflow management tools to fetch, clean, and push data into your databases. How about adding a reverse proxy so that you can reach your tools using memorable domain names rather than IP addresses and ports? What if you want to access your tools from another machine? What if you want to access your tools from another country? If you expose your tools to Internet, how would you secure them? 
+
+And just like that, before you know it, dozens of hours have passed and you find yourself knee-deep in the documentation of some arcane software and trouding through forums, finding a way to build just the right software stack and get them talk to eachother. Finally, at the wee hour of the morning, the whole stack works. It's glorious. 
+
+And now you want to do that all over again for a media server at home.
+
+Why don't we just pay for a SaaS instead? Well, small subscriptions here and there stack up quickly. Moreover, sometimes, you work with sensitive data that simply cannot leave your home or organisation. And let's face it, if you are here, you are a certified geek who wants to do it yourself. 
+
+*So, wouldn't that be nice if our hard-earned knowledge about how to build stacks can be reused and combined to build other stacks? Wouldn't it be nice if we can improve upon the knowledge that we gain rather than searching and starting over all the time?*
+
+Welcome to Server Craft.
+
+## How
+
+
+
 
 ## Environment Variables
+
+
 
 ### Stack-level Variables
 
