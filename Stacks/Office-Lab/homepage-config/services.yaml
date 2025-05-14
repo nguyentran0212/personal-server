@@ -1,0 +1,70 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- GenAI:
+    - Applications:
+      - OpenWebUI:
+          icon: chatgpt.svg
+          href: http://openwebui.localhost/
+          description: Chatbot Interface with web search
+      - AnythingLLM:
+          icon: chatgpt.svg
+          href: http://anythingllm.localhost/
+          description: Integrated workspace for LLM with RAG and agent support
+      - SillyTavern:
+          icon: chatgpt.svg
+          href: http://sillytavern.localhost/
+          description: LLM inteface for powerusers
+    - Tools:
+      - Langflow:
+          icon: chatgpt.svg
+          href: http://langflow.localhost/
+          description: No-code development of LLM agents
+- Data:
+  - Analysis:
+    - Metabase:
+        icon: metabase.svg
+        href: http://metabase.localhost/
+        description: Low-code BI tool
+    - Jupyter:
+        icon: jupyter.svg
+        href: http://jupyter.localhost/
+        description: Jupyter Lab
+  - Storage:
+    - Postgres:
+        icon: postgres.svg
+        href: http://postgres.localhost/
+        description: Main relational database of the stack
+
+- Media:
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: http://jellyfin.localhost/
+        description: Media server
+    - Metube:
+        icon: youtube.svg
+        href: http://metube.localhost/
+        description: Youtube downloader
+    - Mealie:
+        icon: mealie.svg
+        href: http://mealie.localhost/
+        description: Recipe database
+
+- Monitoring Tools:
+    - Portainer:
+        icon: portainer.svg
+        href: http://portainer.localhost/
+        description: Container monitoring
+    - Netdata:
+        icon: netdata.svg
+        href: http://localhost:19999/
+        description: System metrics dashboard
+    - Traefik:
+        icon: traefik.svg
+        href: http://localhost:8080/
+        description: Network Proxy
+    - Authentik:
+        icon: authentik.svg
+        href: http://authentik.localhost/
+        description: Identity provider

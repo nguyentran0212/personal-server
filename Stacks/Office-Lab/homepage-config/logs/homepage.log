@@ -1,0 +1,104 @@
+[2025-05-14T05:33:07.497Z] info: kubernetes.yaml was copied to the config folder
+[2025-05-14T05:33:32.467Z] info: docker.yaml was copied to the config folder
+[2025-05-14T05:33:32.468Z] info: services.yaml was copied to the config folder
+[2025-05-14T05:33:32.469Z] info: bookmarks.yaml was copied to the config folder
+[2025-05-14T05:33:32.477Z] info: widgets.yaml was copied to the config folder
+[2025-05-14T05:33:32.489Z] info: custom.css was copied to the config folder
+[2025-05-14T05:33:32.489Z] info: custom.js was copied to the config folder
+[2025-05-14T05:35:00.913Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-14T05:35:00.916Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-14T05:35:01.149Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-14T05:53:28.090Z] error: Failed to load services.yaml, please check for errors
+[2025-05-14T05:53:28.090Z] error: YAMLException: bad indentation of a sequence entry (24:3)
+
+ 21 |     - Langflow:
+ 22 |         href: http://langflow.loc ...
+ 23 |         description: Main relatio ...
+ 24 |   - Proxmox:
+--------^
+ 25 |         icon: proxmox.png # icons ...
+ 26 |         href: https://192.168.0.1 ...
+[2025-05-14T05:53:28.093Z] error: Failed to load services.yaml, please check for errors
+[2025-05-14T05:53:28.093Z] error: YAMLException: bad indentation of a sequence entry (24:3)
+
+ 21 |     - Langflow:
+ 22 |         href: http://langflow.loc ...
+ 23 |         description: Main relatio ...
+ 24 |   - Proxmox:
+--------^
+ 25 |         icon: proxmox.png # icons ...
+ 26 |         href: https://192.168.0.1 ...
+[2025-05-14T05:53:28.253Z] error: Failed to load services.yaml, please check for errors
+[2025-05-14T05:53:28.253Z] error: YAMLException: bad indentation of a sequence entry (24:3)
+
+ 21 |     - Langflow:
+ 22 |         href: http://langflow.loc ...
+ 23 |         description: Main relatio ...
+ 24 |   - Proxmox:
+--------^
+ 25 |         icon: proxmox.png # icons ...
+ 26 |         href: https://192.168.0.1 ...
+[2025-05-14T06:27:14.742Z] error: <index> YAMLException: duplicated mapping key (27:3)
+
+ 24 |   Data Analysis:
+ 25 |     style: row
+ 26 |     columns: 4
+ 27 |   GenAI Applications:
+--------^
+ 28 |     style: row
+ 29 |     columns: 4
+    at generateError (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:1273:10)
+    at throwError (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:1277:9)
+    at storeMappingPair (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:1448:7)
+    at readBlockMapping (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2263:9)
+    at composeNode (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2531:12)
+    at readBlockMapping (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2254:11)
+    at composeNode (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2531:12)
+    at readDocument (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2715:3)
+    at loadDocuments (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2778:5)
+    at Object.load$1 [as load] (file:///app/node_modules/.pnpm/js-yaml@4.1.0/node_modules/js-yaml/dist/js-yaml.mjs:2804:19)
+[2025-05-14T06:27:14.870Z] error: Failed to discover services, please check kubernetes.yaml for errors or remove example entries.
+[2025-05-14T06:27:14.870Z] error: YAMLException: duplicated mapping key (27:3)
+
+ 24 |   Data Analysis:
+ 25 |     style: row
+ 26 |     columns: 4
+ 27 |   GenAI Applications:
+--------^
+ 28 |     style: row
+ 29 |     columns: 4
+[2025-05-14T06:27:14.871Z] error: Failed to load settings.yaml, please check for errors
+[2025-05-14T06:27:14.871Z] error: YAMLException: duplicated mapping key (27:3)
+
+ 24 |   Data Analysis:
+ 25 |     style: row
+ 26 |     columns: 4
+ 27 |   GenAI Applications:
+--------^
+ 28 |     style: row
+ 29 |     columns: 4
+[2025-05-14T06:27:14.873Z] error: Failed to load settings.yaml, please check for errors
+[2025-05-14T06:27:14.874Z] error: YAMLException: duplicated mapping key (27:3)
+
+ 24 |   Data Analysis:
+ 25 |     style: row
+ 26 |     columns: 4
+ 27 |   GenAI Applications:
+--------^
+ 28 |     style: row
+ 29 |     columns: 4
