@@ -1,6 +1,6 @@
 # Server Craft
 
-![logo](Assets/logo.jpg)
+<img src="Assets/logo.jpg" alt="My Image" width="300" />
 
 A collection of composable recipes to deploy software stacks for your server.
 
