@@ -2,10 +2,9 @@
 # It includes the foundation stack and other necessary applications
 #
 include:
-  - path: "../../Substacks/Foundation/compose.yml" ## Foundation stack 
-  # - path: "../Persistence/compose.yml" ## Data persistence stack 
-  # - path: ../Apps/App-Name-1/compose.yml ## App 1
-  # - path: ../Apps/App-Name-2/compose.yml ## App 2
-  - path: "../../Apps/App-Name-3/compose.yml" ## App with custom envs
+  - path: "../../Substacks/Foundation/compose.yml" ## Foundation substack 
+  # - path: "../Substacks/Persistence/compose.yml" ## Data persistence substack 
+  # - path: "../Substacks/Substack-1/compose.yml" ## Other substack 
+  - path: "../../Apps/App-Name-1/compose.yml" ## App with custom envs
     env_file:
-       - ../../Apps/App-Name-3/default.env
+       - ../../Apps/App-Name-1/default.env
