@@ -1,6 +1,6 @@
 services:
   langflow:
-    image: langflowai/langflow:latest
+    image: langflowai/langflow:1.4.1
     depends_on:
       - langflow-postgres
     environment:

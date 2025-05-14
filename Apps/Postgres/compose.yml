@@ -1,7 +1,7 @@
 services:
 
   db:
-    image: postgres
+    image: postgres:17.5
     hostname: persistence-pg
     restart: unless-stopped
     volumes:
@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   adminer:
-    image: adminer
+    image: adminer:5
     restart: unless-stopped
     # ports:
     #   - 8080:8080

@@ -1,6 +1,6 @@
 services:
   metube:
-    image: ghcr.io/alexta69/metube
+    image: alexta69/metube:2025-05-01
     dns:
       - 127.0.0.1
       - 1.1.1.1

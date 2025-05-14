@@ -1,22 +1,21 @@
 services:
-  anything_llm:
-    image: mintplexlabs/anythingllm:1.8
-    volumes:
-      - anythingllm:/app/server/storage 
-      # - ./.env.anythingllm:/app/server/.env
-    # ports:
-    #   - "3001:3001"
-    cap_add:
-      - SYS_ADMIN 
+  open-webui:
+    # image: ghcr.io/open-webui/open-webui:main
+    # environment:
+    #   OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+    # volumes:
+    #   - open-webui:/app/backend/data
     restart: unless-stopped
     networks:
       - traefik-net
+      - macvlan-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
 
 volumes:
-  anythingllm:
+  open-webui:

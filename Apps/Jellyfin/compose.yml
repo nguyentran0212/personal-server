@@ -1,6 +1,6 @@
 services:
   jellyfin:
-    image: jellyfin/jellyfin
+    image: jellyfin/jellyfin:2025051205
     user: 1000:1000
     volumes:
       - jellyfin-config:/config

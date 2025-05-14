@@ -1,26 +1,25 @@
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
   pihole:
-    image: pihole/pihole:latest
+    container_name: pihole
+    image: pihole/pihole:2025.04.0
     ports:
-      - '53:53/tcp'
-      - '53:53/udp'
-      - "67:67/udp"
-      - '8053:80/tcp'
-    # volumes:
-      # - './etc-pihole:/etc/pihole'
-      # - './etc-dnsmasq.d:/etc/dnsmasq.d'
-      # run `touch ./var-log/pihole.log` first unless you like errors
-      # - './var-log/pihole.log:/var/log/pihole/pihole.log'
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    cap_add:
-      - NET_ADMIN
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
     dns:
       - 127.0.0.1
       - 1.1.1.1
     environment:
-      FTLCONF_LOCAL_IPV4: 192.168.8.2
-      WEBPASSWORD: '${PIHOLE_WEB_PASSWORD}'
+      # Set the appropriate timezone for your location from
+      # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones, e.g:
+      TZ: '${HOME_SERVER_TZ}'
+      # Set a password to access the web interface. Not setting one will result in a random password being assigned
+      FTLCONF_webserver_api_password: '${PIHOLE_WEB_PASSWORD}'
+      # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
+      FTLCONF_dns_listeningMode: 'all'
+    # Volumes store your data between container upgrades
+    restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
       - "nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0"
@@ -30,7 +29,6 @@ services:
       - "metube metube.bunbun.home:192.168.8.2"
       - "mealie mealie.bunbun.home:192.168.8.2"
       - "codeserver codeserver.bunbun.home:192.168.8.2"
-    restart: always
     networks:
       - traefik-net
     labels:
