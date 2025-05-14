@@ -1,0 +1,7 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../../Apps/Langflow/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Langflow/default.env

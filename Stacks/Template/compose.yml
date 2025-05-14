@@ -1,0 +1,10 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../../Substacks/Foundation/compose.yml" ## Foundation substack 
+  # - path: "../Substacks/Persistence/compose.yml" ## Data persistence substack 
+  # - path: "../Substacks/Substack-1/compose.yml" ## Other substack 
+  - path: "../../Apps/App-Name-1/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/App-Name-1/default.env

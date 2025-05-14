@@ -1,13 +1,8 @@
 services:
-  anything_llm:
-    image: mintplexlabs/anythingllm:1.8
+  jupyter:
+    image: quay.io/jupyter/scipy-notebook:latest   # Specify the image
     volumes:
-      - anythingllm:/app/server/storage 
-      # - ./.env.anythingllm:/app/server/.env
-    # ports:
-    #   - "3001:3001"
-    cap_add:
-      - SYS_ADMIN 
+      - "${JUPYTER_WORKDIR}:/home/jovyan/work"  # Bind mount the current directory
     restart: unless-stopped
     networks:
       - traefik-net
@@ -17,6 +12,3 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
-
-volumes:
-  anythingllm:

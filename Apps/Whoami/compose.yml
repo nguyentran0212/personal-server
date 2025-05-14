@@ -1,13 +1,6 @@
 services:
-  anything_llm:
-    image: mintplexlabs/anythingllm:1.8
-    volumes:
-      - anythingllm:/app/server/storage 
-      # - ./.env.anythingllm:/app/server/.env
-    # ports:
-    #   - "3001:3001"
-    cap_add:
-      - SYS_ADMIN 
+  whoami:
+    image: traefik/whoami:v1.11
     restart: unless-stopped
     networks:
       - traefik-net
@@ -17,6 +10,3 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
-
-volumes:
-  anythingllm:

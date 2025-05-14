@@ -1,14 +1,17 @@
 services:
-  anything_llm:
-    image: mintplexlabs/anythingllm:1.8
-    volumes:
-      - anythingllm:/app/server/storage 
-      # - ./.env.anythingllm:/app/server/.env
-    # ports:
-    #   - "3001:3001"
-    cap_add:
-      - SYS_ADMIN 
+  metube:
+    image: alexta69/metube:2025-05-01
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - YTDL_OPTIONS={"cookiefile":"/cookies/cookies-youtube-com.txt"}
+    volumes:
+      - ${METUBE_LOCAL_DOWNLOAD_DIR}:/downloads
+      # - ${METUBE_COOKIE_TXT_PATH}:/cookies/cookies-youtube-com.txt
     networks:
       - traefik-net
     extra_hosts:
@@ -17,6 +20,3 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
-
-volumes:
-  anythingllm:

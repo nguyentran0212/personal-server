@@ -1,0 +1,10 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../../Apps/Netshoot/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Netshoot/default.env
+  - path: "../../Apps/Whoami/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Whoami/default.env

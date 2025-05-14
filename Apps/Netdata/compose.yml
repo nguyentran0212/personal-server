@@ -1,0 +1,58 @@
+services:
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    pid: host
+    network_mode: host
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /:/host/root:ro,rslave
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/log:/host/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /run/dbus:/run/dbus:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+
+
+# services:
+#   open-webui:
+#     # image: ghcr.io/open-webui/open-webui:main
+#     # environment:
+#     #   OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+#     # volumes:
+#     #   - open-webui:/app/backend/data
+#     restart: unless-stopped
+#     networks:
+#       - traefik-net
+#     extra_hosts:
+#       - "host.docker.internal:host-gateway"
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+#       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+#
+# volumes:
+#   open-webui:

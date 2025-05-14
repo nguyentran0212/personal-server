@@ -1,0 +1,37 @@
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:2025.04.0
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    environment:
+      # Set the appropriate timezone for your location from
+      # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones, e.g:
+      TZ: '${HOME_SERVER_TZ}'
+      # Set a password to access the web interface. Not setting one will result in a random password being assigned
+      FTLCONF_webserver_api_password: '${PIHOLE_WEB_PASSWORD}'
+      # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
+      FTLCONF_dns_listeningMode: 'all'
+    # Volumes store your data between container upgrades
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      - "nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0"
+      - "bunbun.home:192.168.8.2"
+      - "pihole pihole.bunbun.home:192.168.8.2"
+      - "jellyfin jellyfin.bunbun.home:192.168.8.2"
+      - "metube metube.bunbun.home:192.168.8.2"
+      - "mealie mealie.bunbun.home:192.168.8.2"
+      - "codeserver codeserver.bunbun.home:192.168.8.2"
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"

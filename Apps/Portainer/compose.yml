@@ -1,0 +1,25 @@
+# Known error: cannot access via portainer.localhost. Must juse https://localhost:9443
+
+services:
+  portainer:
+    image: portainer/portainer-ce:lts  # Specify the image
+    ports:
+    #   - "8000:8000"  # Map port 8000
+      - "9443:9443"  # Map port 9443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Share the Docker socket
+      # - /run/podman/podman.sock:/var/run/docker.sock             #rootful
+      # - /run/user/1000/podman/podman.sock:/var/run/docker.sock   #rootless
+      - portainer_data:/data  # Create a named volume for Portainer data
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  portainer_data:  # Define the named volume for persistent data

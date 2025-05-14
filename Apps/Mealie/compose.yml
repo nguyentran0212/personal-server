@@ -1,0 +1,43 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v2.8.0 # 
+    deploy:
+      resources:
+        limits:
+          memory: 1000M #
+    ports:
+      - 9999:9000
+    # dns:
+    #   - 127.0.0.1
+    #   - 1.1.1.1
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=${HOME_SERVER_TZ}
+      # - TZ="Australia/Adelaide"
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`
+      - OIDC_AUTH_ENABLED=true
+      - OIDC_SIGNUP_ENABLED=true
+      - OIDC_CLIENT_ID=yb6iWsSm724aGH4VPl3z7FVtQgByGCCHgmZuhK0i
+      - OIDC_CLIENT_SECRET=1234mealie
+      - OIDC_CONFIGURATION_URL=http://authentik:9000/application/o/mealie/.well-known/openid-configuration
+      - OIDC_AUTO_REDIRECT=true
+      - OIDC_REMEMBER_ME=true
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  mealie-data:

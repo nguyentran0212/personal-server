@@ -3,6 +3,11 @@ services:
     image: ghcr.io/open-webui/open-webui:main
     environment:
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ENABLE_WEB_SEARCH: True
+      WEB_SEARCH_RESULT_COUNT: 10
+      WEB_SEARCH_ENGINE: ${OLLAMA_WEB_SEARCH_ENGINE}
+      SEARXNG_QUERY_URL: ${OLLAMA_SEARXNG_QUERY_URL}
     volumes:
       - open-webui:/app/backend/data
     restart: unless-stopped

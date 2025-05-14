@@ -1,0 +1,13 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../../Apps/Metube/compose.yml" ## Youtube downloader
+    env_file:
+       - ../../Apps/Metube/default.env
+  - path: "../../Apps/Jellyfin/compose.yml" ## Media server
+    env_file:
+       - ../../Apps/Jellyfin/default.env
+  - path: "../../Apps/Mealie/compose.yml" ## Food database server
+    env_file:
+       - ../../Apps/Mealie/default.env

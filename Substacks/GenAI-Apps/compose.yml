@@ -1,0 +1,17 @@
+# Stack of applications for utilising GenAI
+# - OpenWebUI: ChatUI for most LLMs
+# - Searxng: Provide search capability for OpenWebUI
+# 
+include:
+  - path: "../../Apps/OpenWebUI/compose.yml" 
+    env_file:
+       - ../../Apps/OpenWebUI/default.env
+  - path: "../../Apps/Searxng/compose.yml"
+    env_file:
+       - ../../Apps/Searxng/default.env
+  - path: "../../Apps/SillyTavern/compose.yml"
+    env_file:
+       - ../../Apps/SillyTavern/default.env
+  - path: "../../Apps/AnythingLLM/compose.yml"
+    env_file:
+      - ../../Apps/AnythingLLM/default.env

@@ -1,0 +1,16 @@
+# Current stack of software of my office. It contains the following sub-stacks:
+# - Foundation (routing and observability)
+# - Persistence (postgres database)
+# - Data-Analysis
+# - GenAI Apps
+
+name: ${STACK_NAME}
+
+include:
+  - path: "../../Substacks/Foundation/compose.yml" ## Foundation stack 
+  - path: "../../Substacks/Persistence/compose.yml" ## Data persistence stack 
+  - path: "../../Substacks/Troubleshooting/compose.yml" ## Data persistence stack 
+  - path: "../../Substacks/Data-Analysis/compose.yml" ## Data analysis stack 
+  - path: "../../Substacks/Media/compose.yml" ## Media stack
+  - path: "../../Substacks/GenAI-Apps/compose.yml" ## GenAI applications stack 
+  - path: "../../Substacks/GenAI-Tools/compose.yml" ## GenAI engineering tools stack 

@@ -1,0 +1,26 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:2025051205
+    user: 1000:1000
+    volumes:
+      - jellyfin-config:/config
+      - jellyfin-cache:/cache
+      - ${JELLYFIN_LOCAL_MEDIA_DIR}:/media
+      - /dev/dri:/dev/dri
+    restart: 'unless-stopped'
+    # Optional - alternative address used for autodiscovery
+    environment:
+      - JELLYFIN_PublishedServerUrl=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}
+    # Optional - may be necessary for docker healthcheck to pass if running in host network mode
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    networks:
+      - traefik-net
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  jellyfin-config:
+  jellyfin-cache:

@@ -1,0 +1,32 @@
+services:
+
+  db:
+    image: postgres:17.5
+    hostname: persistence-pg
+    restart: unless-stopped
+    volumes:
+      - persistence-pg-data:/var/lib/postgresql/data/
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  adminer:
+    image: adminer:5
+    restart: unless-stopped
+    # ports:
+    #   - 8080:8080
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+volumes:
+  persistence-pg-data:
