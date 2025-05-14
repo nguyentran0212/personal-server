@@ -12,3 +12,6 @@ include:
   - path: "../../Apps/SillyTavern/compose.yml"
     env_file:
        - ../../Apps/SillyTavern/default.env
+  - path: "../../Apps/AnythingLLM/compose.yml"
+    env_file:
+      - ../../Apps/AnythingLLM/default.env

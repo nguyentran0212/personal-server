@@ -7,9 +7,10 @@
 name: ${STACK_NAME}
 
 include:
-  - path: "../Foundation/compose.yml" ## Foundation stack 
-  - path: "../Persistence/compose.yml" ## Data persistence stack 
-  - path: "../Data-Analysis/compose.yml" ## Data analysis stack 
-  - path: "../Media/compose.yml" ## Media stack
-  - path: "../GenAI-Apps/compose.yml" ## GenAI applications stack 
-  - path: "../GenAI-Tools/compose.yml" ## GenAI engineering tools stack 
+  - path: "../../Substacks/Foundation/compose.yml" ## Foundation stack 
+  - path: "../../Substacks/Persistence/compose.yml" ## Data persistence stack 
+  - path: "../../Substacks/Troubleshooting/compose.yml" ## Data persistence stack 
+  - path: "../../Substacks/Data-Analysis/compose.yml" ## Data analysis stack 
+  - path: "../../Substacks/Media/compose.yml" ## Media stack
+  - path: "../../Substacks/GenAI-Apps/compose.yml" ## GenAI applications stack 
+  - path: "../../Substacks/GenAI-Tools/compose.yml" ## GenAI engineering tools stack 

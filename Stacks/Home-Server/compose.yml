@@ -7,8 +7,8 @@
 name: ${STACK_NAME}
 
 include:
-  - path: "../Foundation/compose.yml" ## Foundation stack 
-  - path: "../Media/compose.yml" ## Compose Stack
+  - path: "../../Substacks/Foundation/compose.yml" ## Foundation stack 
+  - path: "../../Substacks/Media/compose.yml" ## Compose Stack
   - path: "../../Apps/PiHole/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/PiHole/default.env
