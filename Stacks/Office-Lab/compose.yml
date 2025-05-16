@@ -14,3 +14,4 @@ include:
   - path: "../../Substacks/Media/compose.yml" ## Media stack
   - path: "../../Substacks/GenAI-Apps/compose.yml" ## GenAI applications stack 
   - path: "../../Substacks/GenAI-Tools/compose.yml" ## GenAI engineering tools stack 
+  - path: "../../Substacks/Automation/compose.yml" ## GenAI engineering tools stack 

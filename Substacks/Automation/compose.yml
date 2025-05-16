@@ -1,0 +1,7 @@
+# Template for defining a new software stack.
+# It includes the foundation stack and other necessary applications
+#
+include:
+  - path: "../../Apps/Activepieces/compose.yml"
+    env_file:
+      - ../../Apps/Activepieces/default.env

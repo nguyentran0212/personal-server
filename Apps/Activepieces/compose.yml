@@ -1,0 +1,45 @@
+services:
+  activepieces:
+    image: ghcr.io/activepieces/activepieces:0.54.0
+    restart: unless-stopped
+    env_file: default.env
+    depends_on:
+      - activepieces-postgres
+      - activepieces-redis
+    volumes:
+      - ./cache:/usr/src/app/cache
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+
+  activepieces-postgres:
+    image: 'postgres:14.4'
+    restart: unless-stopped
+    env_file: default.env
+    environment:
+      - 'POSTGRES_DB=${AP_POSTGRES_DATABASE}'
+      - 'POSTGRES_PASSWORD=${AP_POSTGRES_PASSWORD}'
+      - 'POSTGRES_USER=${AP_POSTGRES_USERNAME}'
+    volumes:
+      - activepieces_postgres_data:/var/lib/postgresql/data
+    networks:
+      - traefik-net
+
+  activepieces-redis:
+    image: 'redis:7.0.7'
+    restart: unless-stopped
+    env_file: default.env
+    volumes:
+      - 'activepieces_redis_data:/data'
+    networks:
+      - traefik-net
+
+volumes:
+  activepieces_postgres_data:
+  activepieces_redis_data:
+
