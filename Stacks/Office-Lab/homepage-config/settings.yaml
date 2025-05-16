@@ -1,9 +1,9 @@
 ---
 # For configuration options and examples, please see:
 # https://gethomepage.dev/configs/settings/
-title: Office Lab (Local)
+title: Office Lab (Aurora)
 
-description: Dashboard of my digital lab at office (access only from localhost)
+description: Dashboard of my digital lab at office
 
 theme: dark # <----- add this line
 color: slate # <----- add this line
@@ -15,16 +15,20 @@ background:
   opacity: 50 # 0-100
 
 layout:
-  GenAI:
+  GenAI Applications:
     style: row
-    columns: 2
-  Data:
+    columns: 4
+  GenAI Tools:
     style: row
-    columns: 2
+    columns: 4
+  Data Analytics:
+  Databases:
   Media:
     style: row
     columns: 4
-  Monitoring Tools:
+  Automation:
+  Misc:
+  Foundation:
     style: row
     columns: 4
 

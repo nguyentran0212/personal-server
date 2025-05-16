@@ -5,7 +5,7 @@ services:
       OLLAMA_BASE_URL: ${OLLAMA_BASE_URL}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       ENABLE_WEB_SEARCH: True
-      WEB_SEARCH_RESULT_COUNT: 10
+      WEB_SEARCH_RESULT_COUNT: 3
       WEB_SEARCH_ENGINE: ${OLLAMA_WEB_SEARCH_ENGINE}
       SEARXNG_QUERY_URL: ${OLLAMA_SEARXNG_QUERY_URL}
     volumes:
@@ -20,6 +20,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "homepage.group=GenAI Applications" # Group for this service on the homepage
+      - "homepage.name=OpenWebUI" # Name of this service on the homepage
+      - "homepage.icon=openai.png" # Pick from https://github.com/homarr-labs/dashboard-icons
+      - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
+      - "homepage.description=Chatbot UI for LLMs" # Description of this service on the homepage
 
 volumes:
   open-webui:

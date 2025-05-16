@@ -102,3 +102,33 @@
 --------^
  28 |     style: row
  29 |     columns: 4
+[2025-05-16T05:16:13.585Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-16T05:16:13.608Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-16T05:16:13.794Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-16T05:16:16.241Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}
+[2025-05-16T05:16:18.509Z] error: <service-helpers> Error getting services from Docker server 'my-docker': [Error: connect EACCES /var/run/docker.sock] {
+  errno: -13,
+  code: 'EACCES',
+  syscall: 'connect',
+  address: '/var/run/docker.sock'
+}

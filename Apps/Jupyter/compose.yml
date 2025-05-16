@@ -12,3 +12,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "homepage.group=Data Analytics" # Group for this service on the homepage
+      - "homepage.name=Jupyter Lab" # Name of this service on the homepage
+      - "homepage.icon=jupyter.png" # Pick from https://github.com/homarr-labs/dashboard-icons
+      - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
+      - "homepage.description=Python notebook server" # Description of this service on the homepage

@@ -16,6 +16,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "homepage.group=Automation" # Group for this service on the homepage
+      - "homepage.name=Activepieces" # Name of this service on the homepage
+      - "homepage.icon=activepieces.png" # Pick from https://github.com/homarr-labs/dashboard-icons
+      - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
+      - "homepage.description=Workflow automation tool" # Description of this service on the homepage
 
   activepieces-postgres:
     image: 'postgres:14.4'
