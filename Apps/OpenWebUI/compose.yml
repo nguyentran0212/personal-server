@@ -8,6 +8,14 @@ services:
       WEB_SEARCH_RESULT_COUNT: 3
       WEB_SEARCH_ENGINE: ${OLLAMA_WEB_SEARCH_ENGINE}
       SEARXNG_QUERY_URL: ${OLLAMA_SEARXNG_QUERY_URL}
+      ENABLE_OAUTH_SIGNUP: true
+      OAUTH_MERGE_ACCOUNTS_BY_EMAIL: true
+      OAUTH_PROVIDER_NAME: Authentik
+      OPENID_PROVIDER_URL: http://authentik.${HOME_SERVER_DOMAIN}/application/o/openwebui/.well-known/openid-configuration
+      OAUTH_CLIENT_ID: ${OPENWEBUI_OIDC_CLIENT_ID}
+      OAUTH_CLIENT_SECRET: ${OPENWEBUI_OIDC_CLIENT_SECRET}
+      OAUTH_SCOPES: openid email profile
+      OPENID_REDIRECT_URI: http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/oauth/oidc/callback
     volumes:
       - open-webui:/app/backend/data
     restart: unless-stopped
