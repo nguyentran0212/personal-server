@@ -7,9 +7,9 @@ services:
           memory: 1000M #
     ports:
       - 9999:9000
-    # dns:
-    #   - 127.0.0.1
-    #   - 1.1.1.1
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     volumes:
       - mealie-data:/app/data/
     environment:
