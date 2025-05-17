@@ -24,8 +24,8 @@ services:
       - BASE_URL=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`
       - OIDC_AUTH_ENABLED=true
       - OIDC_SIGNUP_ENABLED=true
-      - OIDC_CLIENT_ID=yb6iWsSm724aGH4VPl3z7FVtQgByGCCHgmZuhK0i # MOVE THIS TO SECRET
-      - OIDC_CLIENT_SECRET=m7hGo9pWayxyzWwLvoB658uck1vjDhTMs1HckhYzGPtyRfULxkhq5YprmJnolAadQhh4FN0tx0Y4WhUx45x34gf3tM0iUznAY1BrsaaTcNntarbCq5tMfGwMCwLQqyOY # MOVE THIS TO SECRET
+      - OIDC_CLIENT_ID=${MEALIE_OIDC_CLIENT_ID}
+      - OIDC_CLIENT_SECRET=${MEALIE_OIDC_CLIENT_SECRET} # MOVE THIS TO SECRET
       - OIDC_CONFIGURATION_URL=http://authentik.${HOME_SERVER_DOMAIN}/application/o/mealie/.well-known/openid-configuration
       - OIDC_AUTO_REDIRECT=true
       - OIDC_REMEMBER_ME=true
