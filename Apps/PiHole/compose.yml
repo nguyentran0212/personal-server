@@ -18,6 +18,8 @@ services:
       FTLCONF_webserver_api_password: '${PIHOLE_WEB_PASSWORD}'
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
       FTLCONF_dns_listeningMode: 'all'
+      # List of local DNS records. We use this to resolve appdomain.domain.tld in our stack into IP address of the server.
+      FTLCONF_dns_hosts: ${PIHOLE_EXTRA_HOSTS}
     # Volumes store your data between container upgrades
     restart: unless-stopped
     extra_hosts:

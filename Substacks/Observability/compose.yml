@@ -1,0 +1,7 @@
+# Observability substack
+# Provide facilities to ingest logs, metrics, and traces across your cluster
+# 
+include:
+  - path: "../../Apps/Netdata/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Netdata/default.env

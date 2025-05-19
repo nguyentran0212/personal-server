@@ -7,7 +7,8 @@
 name: ${STACK_NAME}
 
 include:
-  - path: "../../Substacks/Foundation/compose.yml" ## Foundation stack 
+  - path: "../../Substacks/Foundation-DNS/compose.yml" ## Foundation stack 
+  - path: "../../Substacks/Observability/compose.yml" ## Foundation stack 
   - path: "../../Substacks/Persistence/compose.yml" ## Data persistence stack 
   - path: "../../Substacks/Troubleshooting/compose.yml" ## Data persistence stack 
   - path: "../../Substacks/Data-Analysis/compose.yml" ## Data analysis stack 

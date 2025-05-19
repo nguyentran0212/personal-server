@@ -5,3 +5,6 @@
 .aider*
 **/backup
 **/ngrok.log
+*.log
+.env
+!default.env
