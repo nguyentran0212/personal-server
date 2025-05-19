@@ -8,17 +8,32 @@ A collection of composable recipes to deploy software stacks for your server.
 
 Good software elevates us. 
 
-Thanks to the open source community, there is no shortage of good software. The real challenge is configuring these software and integrate them into a stack that is functional, convenient, and secure.
+Thanks to the open source community, there is no shortage of good software. The real challenge is configuring these software and integrate them into a stack that is functional, convenient, and secure. Say, imagine you need to work with some mates to analyse some experiment data. Naturally, you would think about Jupyter Lab or some sorts of business intelligence tool. With container technology, you can spin up an instance of these tools in 5 minutes. But your work does not stop there. How about a nice set of database? Let's throw in a data pipeline as well to move data directly from the bench to the database. What if you want to use domain name rather than IP addresses? What if you want to access everything from Internet? However authentication and authorisation? 
 
-Say, imagine you need to work with some mates to analyse some experiment data and plain old spreadsheet does not cut it anymore. Naturally, you would think about Jupyter Lab or some sorts of business intelligence tool. Thanks to open source and container technology, you can spin up an instance of Jupyter Lab or Metabase in 5 minutes, including the download time. And everyone is happy.
+Suddenly, you five-minute adventure becomes days and weeks of fixing configuration and integration. 
 
-But why stop there? How about a nice set of databases to store the experiment data so all your mates can access? Let's throw in a data pipeline as well to move data directly from the bench to the database. How about adding a reverse proxy so your mates can use domain name rather than IP addresses? What if you want to access your server from Internet so you can work from home? Suddenly, you find yourself pulling an alnighter trouding through obscure documentation trying to configure your reverse proxy to talk to your apps.
-
-Finally, at the wee hour of the morning, the whole stack works. It's glorious. And now you want to do that all over again for a media server at home.
-
-*Wouldn't that be nice if our hard-earned knowledge can be reused and combined to build other stacks?*
+*Wouldn't that be nice if you can pick and combine apps to build your software stack, and have all the foundations like reverse proxy, homepage, SSO working automagically?*
 
 **Welcome to Server Craft.**
+
+## How
+
+To realise our vision of compsable server stack that "automagically" work, we need two things:
+
+1. Preconfigured core capabilities such as reverse proxy, dashboard, authentication in a way that can (semi-)automatically detect and configure to work with apps
+2. Templates for apps and stacks so that apps can work together and use the core capabilities
+
+To realise the things above, we will rely on familiar tools in the self-hosted community: Docker and Docker Compose. Specifically, we will use Docker to run all of the apps in our server and use Docker's networking facility to link them together. A "server stack" is, thus, a collection of Docker containers configured to work together. To define this collection of Docker containers, we are going to use Docker Compose. To make the collection composable, we are going to use the `include` instruction in Docker Compose.
+
+Here is how Server Craft can help you:
+
+1. We define and maintain a set of foundation stacks that handle core capabiliites like reverse proxy, dashboard, monitoring, DNS, authentication.
+2. We provide Docker compose templates for apps to take advantage of the core capabilities by the foundation stacks.
+3. We define a set of design rules so that apps can work together in the same stack.
+
+It means with "recipies" inside Server Stack, you can define a new stack for your server simply by including all the necessary apps and stacks defined in this repository and `docker compose up -d` it. With just a few post-deployment configuration, you can have DNS, SSO, tunnels, and other capabilities. 
+
+If an app you need does not exist, you can use the included template to integrate it.
 
 
 ## User Manual
@@ -100,7 +115,7 @@ cd My-Stack
 
 ## Developer Manual
 
-We welcome contributions that introduce new apps and new substacks. Please see the roadmap for our "wishlist" of new apps and substacks.
+We welcome contributions that introduce new apps and improve the stability and security of the foundation substacks. Please see the roadmap for our "wishlist" of new apps and substacks.
 
 ### General Guideline
 
@@ -137,7 +152,7 @@ MVP
 Key enhancement
 - [ ] VPN support 
 - [ ] Secure tunnel support for accessing from Internet
-- [ ] Setup LDAP and SSO so that users can login with only one credential
+- [x] Setup LDAP and SSO so that users can login with only one credential
 - [ ] Security hardening of the stack
 - [ ] Introduce proper secret management in the recipes
 - [ ] Introduce backup and restore mechanism to the stack
