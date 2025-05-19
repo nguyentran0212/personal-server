@@ -5,7 +5,3 @@ services:
     volumes:
       - ./homepage-config:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations
-
-  pihole:
-    volumes:
-      - ./pihole.toml:/etc/pihole/pihole.toml
