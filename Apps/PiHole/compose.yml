@@ -22,13 +22,6 @@ services:
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      - "nw2master.bioware.com nwn2.master.gamespy.com:0.0.0.0"
-      - "bunbun.home:192.168.8.2"
-      - "pihole pihole.bunbun.home:192.168.8.2"
-      - "jellyfin jellyfin.bunbun.home:192.168.8.2"
-      - "metube metube.bunbun.home:192.168.8.2"
-      - "mealie mealie.bunbun.home:192.168.8.2"
-      - "codeserver codeserver.bunbun.home:192.168.8.2"
     networks:
       - traefik-net
     labels:
