@@ -11,3 +11,6 @@ include:
   - path: "../../Substacks/Troubleshooting/compose.yml" ## Compose Stack
   - path: "../../Substacks/Media/compose.yml" ## Compose Stack
   - path: "../../Substacks/GenAI-Apps/compose.yml" ## Compose Stack
+  - path: "../../Apps/Audiobookshelf/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Audiobookshelf/default.env
