@@ -35,3 +35,6 @@ include:
   - path: "../../Apps/Fusion/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/Fusion/default.env
+  - path: "../../Apps/Audiobookshelf/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Audiobookshelf/default.env
