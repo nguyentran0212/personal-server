@@ -1,0 +1,49 @@
+# Built based on the official Docker compose of Readflow
+
+services:
+  ########################################
+  # PostgreSQL
+  ########################################
+  readflow-db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-readflow}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-secret}
+    volumes:
+      - readflow-db-data:/var/lib/postgresql/data
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  ########################################
+  # readflow
+  ########################################
+  readflow:
+    #build: .
+    image: "ncarlier/readflow:edge"
+    restart: unless-stopped
+    depends_on:
+      - readflow-db
+    environment:
+      - READFLOW_DATABASE_URI=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-secret}@readflow-db/${POSTGRES_DB:-readflow}?sslmode=disable
+      - READFLOW_HTTP_PUBLIC_URL=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}
+    networks:
+      - traefik-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true" # Enable reverse proxy
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)" # Domain names to reach the app
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}" # Tell reverse proxy which port to use
+      - "homepage.group=News" # Group for this service on the homepage
+      - "homepage.name=Readflow" # Name of this service on the homepage
+      - "homepage.icon=google-news.svg" # Pick from https://github.com/homarr-labs/dashboard-icons
+      - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
+      - "homepage.description=News-reading solution" # Description of this service on the homepage
+
+volumes:
+  readflow-db-data:
+

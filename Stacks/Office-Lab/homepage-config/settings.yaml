@@ -15,6 +15,9 @@ background:
   opacity: 50 # 0-100
 
 layout:
+  News:
+    style: row
+    columns: 4
   GenAI Applications:
     style: row
     columns: 4

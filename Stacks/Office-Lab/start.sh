@@ -23,7 +23,7 @@ if [ ! -f "$ENV_FILE" ]; then
 fi
 
 # Start Docker Compose in detached mode with the specified env file
-docker compose --env-file "$ENV_FILE" up -d
+docker compose --env-file "$ENV_FILE" up -d --remove-orphans
 
 # Optional: Confirm the services are started
 if [ $? -eq 0 ]; then
