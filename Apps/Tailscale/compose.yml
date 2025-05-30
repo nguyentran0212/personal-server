@@ -12,14 +12,8 @@ services:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_HOSTNAME=${TS_HOSTNAME}
       - LAN_CIDR=${LAN_CIDR}
-    entrypoint: >
-      sh -c "tailscaled &
-             exec tailscale up \
-               --authkey=${TS_AUTHKEY} \
-               --hostname=${TS_HOSTNAME} \
-               --advertise-dns=$(tailscale ip -4) \
-               --advertise-routes=${LAN_CIDR} \
-               --accept-routes"
+    volumes:
+      - tailscale-data:/var/lib/tailscale
 volumes:
   tailscale-data:
     driver: local
