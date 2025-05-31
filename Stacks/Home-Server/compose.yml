@@ -7,7 +7,7 @@
 name: ${STACK_NAME}
 
 include:
-  - path: "../../Substacks/Foundation-DNS/compose.yml" ## Foundation stack 
+  - path: "../../Substacks/Foundation-DNS-TS/compose.yml" ## Foundation stack 
   - path: "../../Substacks/Troubleshooting/compose.yml" ## Compose Stack
   - path: "../../Substacks/Media/compose.yml" ## Compose Stack
   - path: "../../Substacks/GenAI-Apps/compose.yml" ## Compose Stack
