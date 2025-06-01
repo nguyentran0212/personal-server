@@ -10,7 +10,7 @@ services:
     environment:
       - YTDL_OPTIONS={"cookiefile":"/cookies/cookies-youtube-com.txt"}
     volumes:
-      - ${MEDIA_DIR}/metube:/downloads
+      - ${MEDIA_DIR}/Videos:/downloads
       # - ${METUBE_COOKIE_TXT_PATH}:/cookies/cookies-youtube-com.txt
     networks:
       - traefik-net
