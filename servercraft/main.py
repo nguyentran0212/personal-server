@@ -66,16 +66,28 @@ def prompt_dir(prompt: str, default: str = "") -> str:
 def scan_foundations():
     foundations = []
     for p in SUBSTACKS_DIR.iterdir():
-        if p.is_dir() and p.name.startswith("Foundation-"):
-            if (p / "compose.yml").exists():
-                foundations.append((p.name, p))
+        if p.is_dir() and p.name.startswith("Foundation-") and (p / "compose.yml").exists():
+            meta_file = p / "metadata.yaml"
+            if meta_file.exists():
+                meta = yaml.safe_load(meta_file.read_text())["metadata"]
+                display = f"{meta['name']} - {meta.get('description','')}"
+            else:
+                display = p.name
+            foundations.append((display, p))
     return foundations
 
 def scan_apps():
     apps = []
     for p in APPS_DIR.iterdir():
         if p.is_dir() and (p / "compose.yml").exists() and (p / "default.env").exists():
-            apps.append((p.name, p))
+            meta_file = p / "metadata.yaml"
+            if not meta_file.exists():
+                continue
+            meta = yaml.safe_load(meta_file.read_text())["metadata"]
+            if meta.get("type") != "app":
+                continue
+            display = f"{meta['name']} - {meta.get('description','')}"
+            apps.append((display, p))
     return apps
 
 @app.command("create")
@@ -96,13 +108,22 @@ def create(stack_name: str):
     # Timezone selection
     if available_timezones:
         tz_choices = sorted(available_timezones())
-        top["HOME_SERVER_TZ"] = questionary.select("Home server timezone:", choices=tz_choices).ask()
+        top["HOME_SERVER_TZ"] = questionary.autocomplete(
+            "Home server timezone:", choices=tz_choices, validate=lambda val: val in tz_choices
+        ).ask()
     else:
         top["HOME_SERVER_TZ"] = questionary.text("Home server timezone:").ask()
     # LAN CIDR with detected default IP
     default_ip = get_default_ip()
     default_cidr = f"{default_ip}/24" if default_ip else ""
-    top["LAN_CIDR"] = questionary.text("LAN CIDR (e.g. 192.168.1.0/24):", default=default_cidr).ask()
+    while True:
+        cidr_ans = questionary.text("LAN CIDR (e.g. 192.168.1.0/24):", default=default_cidr).ask()
+        try:
+            ipaddress.ip_network(cidr_ans, strict=False)
+            top["LAN_CIDR"] = cidr_ans
+            break
+        except ValueError:
+            typer.secho(f"Invalid CIDR '{cidr_ans}'. Please enter a valid CIDR.", fg=typer.colors.RED)
     # Directories with existence check
     top["MEDIA_DIR"] = prompt_dir("Media directory:", default="")
     top["WORK_DIR"] = prompt_dir("Work directory:", default="")
