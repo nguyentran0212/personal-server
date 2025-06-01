@@ -2,7 +2,7 @@
 
 <img src="Assets/logo.jpg" alt="My Image" width="300" />
 
-A collection of composable recipes to deploy software stacks for your server.
+Preconfigured, composable recipes and utilities to craft your Dockerised server.
 
 ## Why
 
@@ -34,6 +34,8 @@ Here is how Server Craft can help you:
 It means with "recipies" inside Server Stack, you can define a new stack for your server simply by including all the necessary apps and stacks defined in this repository and `docker compose up -d` it. With just a few post-deployment configuration, you can have DNS, SSO, tunnels, and other capabilities. 
 
 If an app you need does not exist, you can use the included template to integrate it.
+
+![](Docs/Architecture/stack_architecture.drawio)
 
 
 ## User Manual
