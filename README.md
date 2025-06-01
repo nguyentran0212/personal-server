@@ -35,7 +35,7 @@ It means with "recipies" inside Server Stack, you can define a new stack for you
 
 If an app you need does not exist, you can use the included template to integrate it.
 
-![](Docs/Architecture/stack_architecture.drawio)
+![](/Docs/Architecture/stack_architecture.png)
 
 
 ## User Manual
