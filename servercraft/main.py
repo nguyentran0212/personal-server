@@ -101,6 +101,8 @@ def init(stack_name: str):
                 out_lines.append(line)
                 continue
             key, _, val = line.partition("=")
+            if key == "PIHOLE_LOCAL_DNS_RECORDS":
+                continue
             if val.strip() == "":
                 user_val = questionary.text(f"{key} (foundation):").ask() or ""
                 out_lines.append(f'{key}="{user_val}"')
@@ -118,7 +120,7 @@ def init(stack_name: str):
         for k, v in env_map.items():
             if k.endswith("_DOMAIN") and v:
                 fqdn = f"{v}.{top['HOME_SERVER_DOMAIN']}"
-                records.append(f"{fqdn}:{server_ip}")
+                records.append(f"{server_ip} {fqdn}")
     out_lines.append("# PiHole local DNS")
     out_lines.append(f'PIHOLE_LOCAL_DNS_RECORDS="{";".join(records)}"')
     out_lines.append("")
