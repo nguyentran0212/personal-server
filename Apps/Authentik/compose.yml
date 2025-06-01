@@ -9,7 +9,7 @@ services:
       retries: 5
       timeout: 5s
     networks:
-      - traefik-net
+      - authentik-net
     volumes:
       - database:/var/lib/postgresql/data
     environment:
@@ -23,7 +23,7 @@ services:
     command: --save 60 1 --loglevel warning
     restart: unless-stopped
     networks:
-      - traefik-net
+      - authentik-net
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       start_period: 20s
@@ -54,13 +54,15 @@ services:
     #   - "${COMPOSE_PORT_HTTP:-9000}:9000"
     #   - "${COMPOSE_PORT_HTTPS:-9443}:9443"
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
+      - authentik-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Foundation" # Group for this service on the homepage
       - "homepage.name=Authentik" # Name of this service on the homepage
       - "homepage.icon=authentik.png" # Pick from https://github.com/homarr-labs/dashboard-icons
@@ -71,6 +73,7 @@ services:
         condition: service_healthy
       authentik-redis:
         condition: service_healthy
+
   authentik-worker:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
     restart: unless-stopped
@@ -97,7 +100,7 @@ services:
     # env_file:
     #   - .env
     networks:
-      - traefik-net
+      - authentik-net
     depends_on:
       authentik-postgresql:
         condition: service_healthy
@@ -109,3 +112,6 @@ volumes:
     driver: local
   redis:
     driver: local
+
+networks:
+  authentik-net: 

@@ -28,13 +28,14 @@ services:
       - OIDC_REMEMBER_ME=true
     restart: unless-stopped
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Media" # Group for this service on the homepage
       - "homepage.name=Mealie" # Name of this service on the homepage
       - "homepage.icon=mealie.png" # Pick from https://github.com/homarr-labs/dashboard-icons

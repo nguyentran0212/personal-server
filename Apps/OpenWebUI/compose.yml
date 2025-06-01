@@ -21,13 +21,14 @@ services:
     restart: unless-stopped
     # network_mode: host
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=GenAI Applications" # Group for this service on the homepage
       - "homepage.name=OpenWebUI" # Name of this service on the homepage
       - "homepage.icon=openai.png" # Pick from https://github.com/homarr-labs/dashboard-icons

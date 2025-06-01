@@ -14,6 +14,7 @@ services:
     restart: unless-stopped
     networks:
       - ${TRAEFIK_NETWORK}
+      - openwebui-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
@@ -34,9 +35,12 @@ services:
       - ./searxng:/etc/searxng
     restart: unless-stopped
     networks:
-      - traefik-net
+      - openwebui-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
 volumes:
   open-webui:
+
+networks:
+  openwebui-net:

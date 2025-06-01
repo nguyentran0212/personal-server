@@ -10,6 +10,7 @@ services:
       - ./cache:/usr/src/app/cache
     networks:
       - ${TRAEFIK_NETWORK}
+      - ap-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
@@ -34,7 +35,7 @@ services:
     volumes:
       - activepieces_postgres_data:/var/lib/postgresql/data
     networks:
-      - traefik-net
+      - ap-net
 
   activepieces-redis:
     image: 'redis:7.0.7'
@@ -43,9 +44,11 @@ services:
     volumes:
       - 'activepieces_redis_data:/data'
     networks:
-      - traefik-net
+      - ap-net
 
 volumes:
   activepieces_postgres_data:
   activepieces_redis_data:
 
+networks:
+  ap-net:

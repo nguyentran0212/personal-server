@@ -15,11 +15,12 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Media"
       - "homepage.name=Jellyfin"
       - "homepage.icon=jellyfin.png"

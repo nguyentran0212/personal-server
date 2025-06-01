@@ -14,7 +14,7 @@ services:
     volumes:
       - readflow-db-data:/var/lib/postgresql/data
     networks:
-      - traefik-net
+      - readflow-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -31,13 +31,15 @@ services:
       - READFLOW_DATABASE_URI=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-secret}@readflow-db/${POSTGRES_DB:-readflow}?sslmode=disable
       - READFLOW_HTTP_PUBLIC_URL=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
+      - readflow-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true" # Enable reverse proxy
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)" # Domain names to reach the app
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}" # Tell reverse proxy which port to use
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=News" # Group for this service on the homepage
       - "homepage.name=Readflow" # Name of this service on the homepage
       - "homepage.icon=google-news.svg" # Pick from https://github.com/homarr-labs/dashboard-icons
@@ -47,3 +49,5 @@ services:
 volumes:
   readflow-db-data:
 
+networks:
+  readflow-net:

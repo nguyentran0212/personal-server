@@ -22,7 +22,7 @@ services:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:

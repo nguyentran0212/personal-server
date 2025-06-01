@@ -17,4 +17,4 @@ include:
        - ../../Apps/Homepage/default.env
 
 networks:
-  traefik-net: # Traefik network connecting internal apps to the reverse proxy
+  ${TRAEFIK_NETWORK}: # Traefik network connecting internal apps to the reverse proxy
