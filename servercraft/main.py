@@ -110,7 +110,8 @@ def init(stack_name: str):
 
     # PiHole DNS auto-generation
     network = ipaddress.ip_network(top["LAN_CIDR"], strict=False)
-    server_ip = next(network.hosts(), network.network_address)
+    hosts = list(network.hosts())
+    server_ip = hosts[0] if hosts else network.network_address
     records = []
     for app_path in app_paths:
         env_map = dotenv_values(app_path / "default.env")
