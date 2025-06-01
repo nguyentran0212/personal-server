@@ -35,13 +35,33 @@ def get_default_ip():
     return ip
 
 def prompt_dir(prompt: str, default: str = "") -> str:
+    dangerous_dirs = {
+        Path("/"), Path("/root"), Path("/etc"),
+        Path("/usr"), Path("/bin"), Path("/dev"), Path("/sys")
+    }
     while True:
-        val = questionary.text(prompt, default=default).ask()
-        if Path(val).exists():
-            return val
-        retry = questionary.confirm(f"Directory {val} does not exist. Try again?").ask()
-        if not retry:
-            return val
+        user_input = questionary.text(prompt, default=default).ask() or ""
+        expanded = Path(user_input).expanduser()
+        try:
+            abs_path = expanded.resolve()
+        except Exception:
+            abs_path = expanded.absolute()
+        # Confirm expansion
+        if not questionary.confirm(f"Use directory '{abs_path}'?").ask():
+            continue
+        # Warn on dangerous directories
+        if abs_path in dangerous_dirs:
+            if not questionary.confirm(
+                f"'{abs_path}' is a system directory. Are you sure you want to use it?"
+            ).ask():
+                continue
+        # Check existence
+        if abs_path.exists():
+            return str(abs_path)
+        # Offer retry if missing
+        if questionary.confirm(f"Directory '{abs_path}' does not exist. Try again?").ask():
+            continue
+        return str(abs_path)
 
 def scan_foundations():
     foundations = []
