@@ -183,7 +183,7 @@ def create(stack_name: str):
     typer.secho(f"Stack '{stack_name}' created successfully!", fg=typer.colors.GREEN)
     typer.echo(f"Next steps:\n  cd {dest}\n  docker compose up -d")
     # Post‐install inspection
-    inspect(stack_name)
+    inspect_stack(stack_name)
 
 @app.command("inspect")
 def inspect_stack(stack_name: str):
