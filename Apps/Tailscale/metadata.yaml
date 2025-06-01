@@ -1,0 +1,4 @@
+metadata:
+  name: Tailscale
+  type: foundation
+  description: (Part of Foundation Stack) VPN solution for accessing server outside LAN

@@ -1,0 +1,4 @@
+metadata:
+  name: Whoami
+  type: foundation
+  description: (Part of Foundation Stack) Utility container for debugging network and proxy

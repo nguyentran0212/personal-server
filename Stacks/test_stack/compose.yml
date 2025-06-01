@@ -1,0 +1,8 @@
+include:
+- path: ../../Substacks/Foundation-DNS-TS/compose.yml
+- path: ../../Apps/Activepieces/compose.yml
+  env_file:
+  - ../../Apps/Activepieces/default.env
+- path: ../../Apps/Mealie/compose.yml
+  env_file:
+  - ../../Apps/Mealie/default.env
