@@ -2,12 +2,18 @@ import os
 import shutil
 import ipaddress
 import secrets
+import socket
 from pathlib import Path
 
 import yaml
 import typer
 import questionary
 from dotenv import dotenv_values
+
+try:
+    from zoneinfo import available_timezones
+except ImportError:
+    available_timezones = None
 
 app = typer.Typer(help="Servercraft CLI: scaffold Docker stacks with apps & foundations")
 
@@ -16,6 +22,26 @@ APPS_DIR = ROOT_DIR / "Apps"
 SUBSTACKS_DIR = ROOT_DIR / "Substacks"
 STACKS_DIR = ROOT_DIR / "Stacks"
 TEMPLATE_STACK = STACKS_DIR / "Template"
+
+def get_default_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+    except Exception:
+        ip = None
+    finally:
+        s.close()
+    return ip
+
+def prompt_dir(prompt: str, default: str = "") -> str:
+    while True:
+        val = questionary.text(prompt, default=default).ask()
+        if Path(val).exists():
+            return val
+        retry = questionary.confirm(f"Directory {val} does not exist. Try again?").ask()
+        if not retry:
+            return val
 
 def scan_foundations():
     foundations = []
@@ -32,8 +58,8 @@ def scan_apps():
             apps.append((p.name, p))
     return apps
 
-@app.command()
-def init(stack_name: str):
+@app.command("create")
+def create(stack_name: str):
     """
     Initialize a new Docker stack named STACK_NAME.
     """
@@ -47,10 +73,19 @@ def init(stack_name: str):
     top = {}
     top["STACK_NAME"] = stack_name
     top["HOME_SERVER_DOMAIN"] = questionary.text("Home server domain:").ask()
-    top["HOME_SERVER_TZ"] = questionary.text("Home server timezone:").ask()
-    top["LAN_CIDR"] = questionary.text("LAN CIDR (e.g. 192.168.1.0/24):").ask()
-    top["MEDIA_DIR"] = questionary.text("Media directory:").ask()
-    top["WORK_DIR"] = questionary.text("Work directory:").ask()
+    # Timezone selection
+    if available_timezones:
+        tz_choices = sorted(available_timezones())
+        top["HOME_SERVER_TZ"] = questionary.select("Home server timezone:", choices=tz_choices).ask()
+    else:
+        top["HOME_SERVER_TZ"] = questionary.text("Home server timezone:").ask()
+    # LAN CIDR with detected default IP
+    default_ip = get_default_ip()
+    default_cidr = f"{default_ip}/24" if default_ip else ""
+    top["LAN_CIDR"] = questionary.text("LAN CIDR (e.g. 192.168.1.0/24):", default=default_cidr).ask()
+    # Directories with existence check
+    top["MEDIA_DIR"] = prompt_dir("Media directory:", default="")
+    top["WORK_DIR"] = prompt_dir("Work directory:", default="")
 
     # Foundation choice
     foundations = scan_foundations()
@@ -147,6 +182,31 @@ def init(stack_name: str):
 
     typer.secho(f"Stack '{stack_name}' created successfully!", fg=typer.colors.GREEN)
     typer.echo(f"Next steps:\n  cd {dest}\n  docker compose up -d")
+    # Post‐install inspection
+    inspect(stack_name)
+
+@app.command("inspect")
+def inspect_stack(stack_name: str):
+    """
+    Inspect an existing stack and report variables needing attention.
+    """
+    env_file = STACKS_DIR / stack_name / ".env"
+    if not env_file.exists():
+        typer.secho(f"No .env file found for stack {stack_name}", fg=typer.colors.RED)
+        raise typer.Exit(1)
+    env_map = dotenv_values(env_file)
+    for k, v in env_map.items():
+        if v in ("", None):
+            if k == "TS_AUTHKEY":
+                typer.secho(f"{k}: not set. Generate a Tailscale auth key and set it in .env.", fg=typer.colors.YELLOW)
+            else:
+                typer.secho(f"{k}: not set. Please set this variable in .env.", fg=typer.colors.YELLOW)
+        elif v == "CHANGE_ME":
+            if k.startswith("OIDC_"):
+                typer.secho(f"{k}: placeholder; after deploying, finish OIDC setup in Authentik then update .env.", fg=typer.colors.YELLOW)
+            else:
+                typer.secho(f"{k}: placeholder; please update .env.", fg=typer.colors.YELLOW)
+    typer.echo("Inspection complete.")
 
 def main():
     app()
