@@ -2,7 +2,7 @@ services:
   jupyter:
     image: quay.io/jupyter/scipy-notebook:latest   # Specify the image
     volumes:
-      - "${JUPYTER_WORKDIR}:/home/jovyan/work"  # Bind mount the current directory
+      - "${WORK_DIR}:/home/jovyan/work"  # Bind mount the current directory
     restart: unless-stopped
     networks:
       - traefik-net

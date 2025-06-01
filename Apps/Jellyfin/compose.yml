@@ -5,7 +5,7 @@ services:
     volumes:
       - jellyfin-config:/config
       - jellyfin-cache:/cache
-      - ${JELLYFIN_LOCAL_MEDIA_DIR}:/media
+      - ${MEDIA_DIR}:/media
       - /dev/dri:/dev/dri
     restart: 'unless-stopped'
     # Optional - alternative address used for autodiscovery
