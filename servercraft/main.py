@@ -104,7 +104,7 @@ def init(stack_name: str):
             if key == "PIHOLE_LOCAL_DNS_RECORDS":
                 continue
             if val.strip() == "":
-                user_val = questionary.text(f"{key} (foundation):").ask() or ""
+                user_val = questionary.text(f"{key} (foundation):").ask() or "CHANGE_ME"
                 out_lines.append(f'{key}="{user_val}"')
             else:
                 out_lines.append(line)
