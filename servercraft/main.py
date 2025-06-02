@@ -289,6 +289,31 @@ def stop_stack(stack_name: str):
         raise typer.Exit(1)
     typer.secho(f"Stack '{stack_name}' stopped.", fg=typer.colors.GREEN)
 
+# List available apps and stacks
+@app.command("list-apps")
+def list_apps():
+    """
+    List all available applications.
+    """
+    apps = scan_apps()
+    if not apps:
+        typer.echo("No available apps found.")
+        return
+    for display, _ in apps:
+        typer.echo(f"- {display}")
+
+@app.command("list-stacks")
+def list_stacks():
+    """
+    List all available stacks (excluding Template).
+    """
+    stacks = [p.name for p in STACKS_DIR.iterdir() if p.is_dir() and p.name != "Template"]
+    if not stacks:
+        typer.echo("No stacks found.")
+        return
+    for s in sorted(stacks):
+        typer.echo(f"- {s}")
+
 def main():
     app()
 
