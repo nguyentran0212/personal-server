@@ -105,7 +105,7 @@ def create(stack_name: str):
     # Top-level prompts
     top = {}
     top["STACK_NAME"] = stack_name
-    top["HOME_SERVER_DOMAIN"] = questionary.text("Home server domain:").ask()
+    top["HOME_SERVER_DOMAIN"] = questionary.text("Home server domain (leave it to localhost if you are not accessing it from LAN or Internet):", default="localhost").ask()
     # Timezone selection
     if available_timezones:
         tz_choices = sorted(available_timezones())
