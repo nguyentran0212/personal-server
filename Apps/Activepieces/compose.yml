@@ -7,12 +7,16 @@ services:
       - activepieces-postgres
       - activepieces-redis
     volumes:
-      - ./cache:/usr/src/app/cache
+      - activepieces_cache:/usr/src/app/cache
     networks:
       - ${TRAEFIK_NETWORK}
       - ap-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    environment:
+      - AP_API_KEY=${AP_API_KEY}
+      - AP_ENCRYPTION_KEY=${AP_ENCRYPTION_KEY}
+      - AP_JWT_SECRET=${AP_JWT_SECRET}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
@@ -49,6 +53,7 @@ services:
 volumes:
   activepieces_postgres_data:
   activepieces_redis_data:
+  activepieces_cache:
 
 networks:
   ap-net:
