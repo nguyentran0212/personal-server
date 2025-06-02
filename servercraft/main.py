@@ -230,24 +230,64 @@ def create(stack_name: str):
 @app.command("inspect")
 def inspect_stack(stack_name: str):
     """
-    Inspect an existing stack and report variables needing attention.
+    Inspect and summarize stack configuration and highlight variables needing attention.
     """
-    env_file = STACKS_DIR / stack_name / ".env"
+    dest = STACKS_DIR / stack_name
+    env_file = dest / ".env"
     if not env_file.exists():
         typer.secho(f"No .env file found for stack {stack_name}", fg=typer.colors.RED)
         raise typer.Exit(1)
+
+    # Load environment variables
     env_map = dotenv_values(env_file)
-    for k, v in env_map.items():
-        if v in ("", None):
-            if k == "TS_AUTHKEY":
-                typer.secho(f"{k}: not set. Generate a Tailscale auth key and set it in .env.", fg=typer.colors.YELLOW)
-            else:
-                typer.secho(f"{k}: not set. Please set this variable in .env.", fg=typer.colors.YELLOW)
-        elif v == "CHANGE_ME":
-            if k.startswith("OIDC_"):
-                typer.secho(f"{k}: placeholder; after deploying, finish OIDC setup in Authentik then update .env.", fg=typer.colors.YELLOW)
-            else:
-                typer.secho(f"{k}: placeholder; please update .env.", fg=typer.colors.YELLOW)
+
+    # General configuration
+    typer.secho("General Configuration:", fg=typer.colors.CYAN)
+    for key in ["STACK_NAME", "HOME_SERVER_DOMAIN", "HOME_SERVER_TZ", "LAN_CIDR", "MEDIA_DIR", "WORK_DIR"]:
+        typer.echo(f"  {key}: {env_map.get(key)}")
+
+    # Load compose includes to determine foundation and apps
+    compose_file = dest / "compose.yml"
+    compose_data = yaml.safe_load(compose_file.read_text())
+    includes = compose_data.get("include", [])
+
+    # Foundation
+    if includes:
+        foundation_path = Path(dest, includes[0]["path"]).resolve()
+        foundation_name = foundation_path.parent.name
+        typer.secho(f"Foundation: {foundation_name}", fg=typer.colors.CYAN)
+
+    # Apps
+    app_list = []
+    for inc in includes:
+        p = inc.get("path", "")
+        if "/Apps/" in p:
+            app_name = Path(dest, p).resolve().parent.name
+            app_list.append(app_name)
+    typer.secho("Apps:", fg=typer.colors.CYAN)
+    if app_list:
+        for a in app_list:
+            typer.echo(f"  - {a}")
+    else:
+        typer.echo("  (none)")
+
+    # Identify missing or placeholder environment variables
+    missing = [(k, v) for k, v in env_map.items() if v in ("", None) or v == "CHANGE_ME"]
+    if missing:
+        typer.secho("Variables needing attention:", fg=typer.colors.YELLOW)
+        for k, v in missing:
+            status = "missing" if v in ("", None) else "placeholder"
+            typer.echo(f"  {k}: {status}")
+        # Tailor guidance
+        if any(k == "TS_AUTHKEY" for k, _ in missing):
+            typer.secho("- Tailscale: generate an auth key at https://login.tailscale.com/admin/settings/keys and set TS_AUTHKEY.", fg=typer.colors.GREEN)
+            dom = env_map.get("HOME_SERVER_DOMAIN")
+            typer.secho(f"- Verify DNS records in Tailscale dashboard point {dom} to your server's Tailscale IP.", fg=typer.colors.GREEN)
+        if any(k.startswith("OIDC_") for k, _ in missing):
+            typer.secho("- OIDC: after initial deploy, in Authentik admin create OAuth clients for each service and set OIDC_CLIENT_ID/SECRET vars in .env.", fg=typer.colors.GREEN)
+    else:
+        typer.secho("All environment variables are set.", fg=typer.colors.GREEN)
+
     typer.echo("Inspection complete.")
 
 @app.command("start")
