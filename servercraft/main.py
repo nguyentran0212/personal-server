@@ -9,6 +9,7 @@ import yaml
 import typer
 import questionary
 from dotenv import dotenv_values
+import subprocess
 
 try:
     from zoneinfo import available_timezones
@@ -248,6 +249,45 @@ def inspect_stack(stack_name: str):
             else:
                 typer.secho(f"{k}: placeholder; please update .env.", fg=typer.colors.YELLOW)
     typer.echo("Inspection complete.")
+
+@app.command("start")
+def start_stack(stack_name: str):
+    """
+    Start an existing Docker stack named STACK_NAME.
+    """
+    dest = STACKS_DIR / stack_name
+    env_file = dest / ".env"
+    if not env_file.exists():
+        typer.secho(f"Error: .env file not found for stack {stack_name}.", fg=typer.colors.RED)
+        typer.echo("Please configure your environment file or create a new stack with 'servercraft create'.")
+        raise typer.Exit(1)
+    result = subprocess.run(["docker", "compose", "up", "-d"], cwd=str(dest))
+    if result.returncode != 0:
+        typer.secho("Failed to start stack services.", fg=typer.colors.RED)
+        raise typer.Exit(1)
+    typer.secho(f"Stack '{stack_name}' started.", fg=typer.colors.GREEN)
+
+@app.command("stop")
+def stop_stack(stack_name: str):
+    """
+    Stop a running Docker stack named STACK_NAME.
+    """
+    dest = STACKS_DIR / stack_name
+    # Check if any services are running
+    result_ps = subprocess.run(["docker", "compose", "ps"], cwd=str(dest), capture_output=True, text=True)
+    lines = result_ps.stdout.strip().splitlines()
+    if len(lines) <= 1:
+        typer.secho(f"Stack '{stack_name}' is not running.", fg=typer.colors.YELLOW)
+        raise typer.Exit(0)
+    env_file = dest / ".env"
+    if not env_file.exists():
+        typer.secho(f"Error: .env file not found for stack {stack_name}. Cannot stop automatically.", fg=typer.colors.RED)
+        raise typer.Exit(1)
+    result_down = subprocess.run(["docker", "compose", "down"], cwd=str(dest))
+    if result_down.returncode != 0:
+        typer.secho("Failed to stop stack services.", fg=typer.colors.RED)
+        raise typer.Exit(1)
+    typer.secho(f"Stack '{stack_name}' stopped.", fg=typer.colors.GREEN)
 
 def main():
     app()
