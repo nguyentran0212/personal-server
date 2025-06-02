@@ -223,7 +223,6 @@ def create(stack_name: str):
         p.chmod(p.stat().st_mode | 0o111)
 
     typer.secho(f"Stack '{stack_name}' created successfully!", fg=typer.colors.GREEN)
-    typer.echo(f"Next steps:\n  cd {dest}\n  docker compose up -d")
     # Post‐install inspection
     inspect_stack(stack_name)
 
