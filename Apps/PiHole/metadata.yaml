@@ -1,0 +1,4 @@
+metadata:
+  name: PiHole
+  type: foundation
+  description: (Part of Foundation Stack) DNS server for adblocking and resolving local DNS records

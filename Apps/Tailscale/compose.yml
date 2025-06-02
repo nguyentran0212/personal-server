@@ -9,7 +9,7 @@ services:
       - /dev/net/tun:/dev/net/tun
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
-      - TS_HOSTNAME=${TS_HOSTNAME}
+      - TS_HOSTNAME=${STACK_NAME}-tailscale
       - TS_ROUTES=${LAN_CIDR}
     volumes:
       - tailscale-data:/var/lib/tailscale

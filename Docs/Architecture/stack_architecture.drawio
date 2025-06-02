@@ -1,0 +1,273 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.16 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.16">
+  <diagram name="Page-1" id="C0D9yHqIFW8QUnZjU4gx">
+    <mxGraphModel dx="3239" dy="2211" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-4" value="&lt;b&gt;Server (LAN IP + Tailscale IP) - Stack Domain Name: domain.tld&lt;/b&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;verticalAlign=top;labelPosition=center;verticalLabelPosition=middle;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-770" y="-400" width="1010" height="810" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-59" value="&lt;b&gt;STACK&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#B9E0A5;dashed=1;dashPattern=8 8;align=left;verticalAlign=top;opacity=10;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="-740" y="-340" width="970" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-48" value="&lt;b&gt;App (Langflow)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-730" y="-310" width="460" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-37" value="&lt;b&gt;Foundation Sub-stack (DNS+TS)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;align=left;verticalAlign=top;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="-310" width="400" height="680" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-3" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-5" target="xPfW20icJ5CtsJgAPqhM-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="534" y="400" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-2" target="xPfW20icJ5CtsJgAPqhM-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-2" value="Router + Access Point + DHCP Server" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.wireless_modem;" vertex="1" parent="1">
+          <mxGeometry x="510" y="200" width="100" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-4" target="xPfW20icJ5CtsJgAPqhM-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-5" value="Internet" style="html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.cloud;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="515" y="410" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-6" value="LAN Network" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="-35" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-9" target="xPfW20icJ5CtsJgAPqhM-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-9" value="Client" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.management_console;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="808.75" y="100" width="63" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-10" target="xPfW20icJ5CtsJgAPqhM-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-10" value="Mobile Client" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.mobile_client;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="820" y="-140" width="40.5" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-13" value="Docker Bridge Network (traefik-net)" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-150" y="24" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-14" value="Traefik (Reverse Proxy)" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.servers.reverse_proxy;" vertex="1" parent="1">
+          <mxGeometry x="123.5" y="-186.5" width="41" height="53" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-15" value="PiHole &lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(DNS Server)&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;(pihole.domain.tld)&lt;/span&gt;&lt;/div&gt;" style="verticalLabelPosition=bottom;sketch=0;aspect=fixed;html=1;verticalAlign=top;strokeColor=none;align=center;outlineConnect=0;shape=mxgraph.citrix.dns_server;" vertex="1" parent="1">
+          <mxGeometry x="115.75" y="-90" width="56.5" height="68.32" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-16" target="xPfW20icJ5CtsJgAPqhM-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-16" value="Port 80" style="fontStyle=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;spacingLeft=2;" vertex="1" parent="1">
+          <mxGeometry x="230" y="-200" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-17" target="xPfW20icJ5CtsJgAPqhM-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-17" value="Port 443" style="fontStyle=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;spacingLeft=2;" vertex="1" parent="1">
+          <mxGeometry x="230" y="-150" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-18" target="xPfW20icJ5CtsJgAPqhM-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-18" value="Port 53" style="fontStyle=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;spacingLeft=2;" vertex="1" parent="1">
+          <mxGeometry x="230" y="-70.84" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-20" value="Port 41641" style="fontStyle=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;spacingLeft=2;" vertex="1" parent="1">
+          <mxGeometry x="230" y="-290" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-22" value="Tailscale Container&lt;div&gt;(VPN)&lt;/div&gt;" style="verticalLabelPosition=bottom;sketch=0;html=1;fillColor=#282828;strokeColor=none;verticalAlign=top;pointerEvents=1;align=center;shape=mxgraph.cisco_safe.security_icons.vpn;" vertex="1" parent="1">
+          <mxGeometry x="122.5" y="-300" width="43" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.791;entryY=0.53;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-20" target="xPfW20icJ5CtsJgAPqhM-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-27" value="Homepage&lt;div&gt;(homepage.domain.tld)&lt;/div&gt;" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/general/Dashboard.svg;" vertex="1" parent="1">
+          <mxGeometry x="110" y="40" width="68" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-28" value="Portainer&lt;br&gt;(portainer.domain.tld)" style="image;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/azure2/other/Azure_Monitor_Dashboard.svg;" vertex="1" parent="1">
+          <mxGeometry x="110" y="146.8" width="68" height="63.2" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-29" value="Authentik (Identity Provider)&lt;br&gt;(authentik.domain.tld)" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;fontColor=#4277BB;labelBackgroundColor=default;fontSize=12;spacingTop=3;image=img/lib/ibm/security/identity_provider.svg;" vertex="1" parent="1">
+          <mxGeometry x="114" y="260" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-31" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-22">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="90" y="80" as="sourcePoint" />
+            <mxPoint x="140" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-32" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-45" y="-78" as="sourcePoint" />
+            <mxPoint x="133" y="-245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-33" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-30" y="-68" as="sourcePoint" />
+            <mxPoint x="134" y="-141" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-34" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-27">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-20" y="-46" as="sourcePoint" />
+            <mxPoint x="126" y="-46" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-35" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-28">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-32" y="-22" as="sourcePoint" />
+            <mxPoint x="120" y="57" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-36" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-29">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-47" y="-13" as="sourcePoint" />
+            <mxPoint x="122" y="157" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-43" value="«Container»&lt;br&gt;&lt;b&gt;Langflow&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="-260" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-44" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="xPfW20icJ5CtsJgAPqhM-43">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-45" value="«Container»&lt;br&gt;&lt;b&gt;Langflow-Postgres&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-710" y="-260" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-46" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="xPfW20icJ5CtsJgAPqhM-45">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-47" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-45" target="xPfW20icJ5CtsJgAPqhM-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-205" y="-182" as="sourcePoint" />
+            <mxPoint x="-13" y="-460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-50" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-43">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-55" y="38" as="sourcePoint" />
+            <mxPoint x="137" y="-240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-51" value="&lt;b&gt;App (Open WebUI)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-730" y="-110" width="460" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-52" value="«Container»&lt;br&gt;&lt;b&gt;OpenWebUI&lt;/b&gt;" style="html=1;dropTarget=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="-460" y="-60" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-53" value="" style="shape=module;jettyWidth=8;jettyHeight=4;" vertex="1" parent="xPfW20icJ5CtsJgAPqhM-52">
+          <mxGeometry x="1" width="20" height="20" relative="1" as="geometry">
+            <mxPoint x="-27" y="7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-56" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-52">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-109" y="39" as="sourcePoint" />
+            <mxPoint x="-273" y="-160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-57" value="&lt;b&gt;App (...)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=8 8;align=left;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-730" y="80" width="460" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-58" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-13" target="xPfW20icJ5CtsJgAPqhM-57">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-133" y="56" as="sourcePoint" />
+            <mxPoint x="-220" y="26" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-61" value="Network Mode: Host&lt;div&gt;Authenticate with Tailscale AuthKey (need renew every 3 months)&lt;/div&gt;&lt;div&gt;Advertise route to LAN IP of server&lt;/div&gt;&lt;div&gt;Accept route advertisement from others&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="190" y="-460" width="236" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-62" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-22" target="xPfW20icJ5CtsJgAPqhM-61">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-80" y="-110" as="sourcePoint" />
+            <mxPoint x="-30" y="-160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-63" value="Configure the server as one of DNS nameservers (automatically via DHCP)&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Run tailscale client&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;Accept route advertisements&lt;/li&gt;&lt;li&gt;Accept DNS&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;In LAN, client can connect to server via LAN IP directly (due to DHCP pointing to PiHole as DNS server and providing default route for LAN IP)&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Outside LAN, tailscale resolve domain.tld using PiHole in the server, which return LAN IP. The client then uses tailscale to reach LAN IP via the VPN. This is possible because the server advertise it can receive LAN IP via tailscale, and the client is configured to receive advertised routes.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="17.04" width="410" height="228.92" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-64" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" target="xPfW20icJ5CtsJgAPqhM-63" source="xPfW20icJ5CtsJgAPqhM-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="880" y="-133.5" as="sourcePoint" />
+            <mxPoint x="684" y="-1.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-65" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-9" target="xPfW20icJ5CtsJgAPqhM-63">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="871" y="-114" as="sourcePoint" />
+            <mxPoint x="960" y="-181" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-66" value="Client" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.management_console;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="808.75" y="510" width="63" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-67" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-66" target="xPfW20icJ5CtsJgAPqhM-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="819" y="141" as="sourcePoint" />
+            <mxPoint x="570" y="55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-69" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-66" target="xPfW20icJ5CtsJgAPqhM-63">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="882" y="131" as="sourcePoint" />
+            <mxPoint x="950" y="107" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-70" value="Contain local DNS records of subdomain.domain.tld pointing to LAN IP.&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;For every app in the stack, a new local DNS record must be added, otherwise client cannot resolve that domain name.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="264" y="88" width="236" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-71" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-15" target="xPfW20icJ5CtsJgAPqhM-70">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="176" y="-282" as="sourcePoint" />
+            <mxPoint x="249" y="-340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-72" value="&lt;b&gt;Configuration via Environment Variables&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=center;spacingLeft=5;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-1520" y="-618" width="720" height="899" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-73" value="Automatically picks up routing configuration via labels of Docker Containers" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="340" y="-310" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-74" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-73" target="xPfW20icJ5CtsJgAPqhM-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="182" y="-22" as="sourcePoint" />
+            <mxPoint x="326" y="98" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-75" value="Automatically picks up homepage entry via labels of Docker Containers" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="340" y="-203.5" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-76" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-75" target="xPfW20icJ5CtsJgAPqhM-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="370" y="-230" as="sourcePoint" />
+            <mxPoint x="175" y="-158" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-77" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Stack-level Configurations&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;User must fill in:&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;ul&gt;&lt;li style=&quot;&quot;&gt;&lt;li style=&quot;&quot;&gt;HOME_SERVER_DOMAIN: domain name used to access the stack (e.g., domain.tld). Can be almost anything.&lt;/li&gt;&lt;li style=&quot;&quot;&gt;HOME_SERVER_TZ: timezone of the server (e.g., &quot;Australia/Adelaide&quot;)&lt;/li&gt;&lt;li style=&quot;&quot;&gt;STACK_NAME: name of your server for ease of identification (e.g., my_stack)&lt;/li&gt;&lt;li style=&quot;&quot;&gt;MEDIA_DIR: name of local directory to store media content produced and consumed by the stack (e.g. ~/media/)&lt;/li&gt;&lt;li style=&quot;&quot;&gt;WORK_DIR: name of local directory for working on codes and projects in the stack (e.g., ~/Documents/GitHub)&lt;/li&gt;&lt;/li&gt;&lt;/ul&gt;Should be generated automatically by a tool&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;ul&gt;&lt;li&gt;LAN_CIDR: the IP subnet to be exposed to tailscale net (e.g., 192.168.1.1/32 to expose only the server&#39;s IP)&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-1500" y="-579" width="680" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-78" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Foundation Sub-stack Configurations&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;User should leave at default&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;ul&gt;&lt;li&gt;TRAEFIK_NETWORK: name of docker bridge network used by Traefik for connecting to container services. Default is traefik-net&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;Should be generated automatically by a tool&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;li&gt;(If using PiHole) PIHOLE_LOCAL_DNS_RECORDS: local DNS records for PiHole. Must be written in specific format: &quot;192.168.1.1 gateway.home;192.168.1.2 gateway2.home&quot;&lt;/li&gt;&lt;/li&gt;&lt;/ul&gt;User must fill in&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;TS_AUTHKEY: authentication key for tailscale client. User should generate this from their tailscale dashboard and paste it here&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-1500" y="-359" width="680" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-79" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;App configurations&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Developer must fill in. User should leave at default&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;ul&gt;&lt;li&gt;APP_NAME: name of this particular app (e.g., jellyfin, openwebui, etc.)&lt;/li&gt;&lt;li&gt;APP_DOMAIN: subdomain used to reach this particular app (e.g., jellyfin would match match to jellyfin.domain.tld)&lt;/li&gt;&lt;li&gt;APP_PORT: port that traefik would use to reach the app&lt;/li&gt;&lt;li&gt;Other app-specific configurations, such as which database to use or operating mode&lt;/li&gt;&lt;/ul&gt;&lt;div&gt;Should be generated automatically by a tool&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;li&gt;SECRET_...: These variables are for private keys of the app. They should be generated using correct algorithm.&lt;/li&gt;&lt;/li&gt;&lt;/ul&gt;User must fill in&lt;/div&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;OIDC_CLIENT_ID_...: If user wants to use SSO with the builtin Authentik, they need to configure Authentik and copy this ID from authentik to configuration.&lt;/li&gt;&lt;li&gt;OIDC_CLIENT_SECRET_...: If user wants to use SSO with builtin Authentik, they need to configure Authentik and copy this secret to the configuration&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingLeft=5;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="-1500" y="-109" width="680" height="370" as="geometry" />
+        </mxCell>
+        <mxCell id="xPfW20icJ5CtsJgAPqhM-80" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1" source="xPfW20icJ5CtsJgAPqhM-59" target="xPfW20icJ5CtsJgAPqhM-72">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="175" y="-282" as="sourcePoint" />
+            <mxPoint x="249" y="-340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

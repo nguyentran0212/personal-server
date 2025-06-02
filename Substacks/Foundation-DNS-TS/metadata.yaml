@@ -1,0 +1,4 @@
+metadata:
+  name: Foundation-DNS-TS
+  type: foundation
+  description: Foundation stack for LAN and Internet use (Traefik + PiHole + Tailscale)

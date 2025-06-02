@@ -19,17 +19,18 @@ services:
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'
       FTLCONF_dns_listeningMode: 'all'
       # List of local DNS records. We use this to resolve appdomain.domain.tld in our stack into IP address of the server.
-      FTLCONF_dns_hosts: ${PIHOLE_EXTRA_HOSTS}
+      FTLCONF_dns_hosts: ${PIHOLE_LOCAL_DNS_RECORDS}
     # Volumes store your data between container upgrades
     restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Foundation" # Group for this service on the homepage
       - "homepage.name=PiHole" # Name of this service on the homepage
       - "homepage.icon=pi-hole.png" # Pick from https://github.com/homarr-labs/dashboard-icons

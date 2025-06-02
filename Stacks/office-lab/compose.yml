@@ -1,0 +1,35 @@
+include:
+- path: ../../Substacks/Foundation-DNS-TS/compose.yml
+- path: "../../Substacks/Observability/compose.yml" ## Foundation stack 
+- path: "../../Substacks/Persistence/compose.yml" ## Data persistence stack 
+- path: "../../Substacks/Troubleshooting/compose.yml" ## Data persistence stack 
+- path: ../../Apps/Langflow/compose.yml
+  env_file:
+  - ../../Apps/Langflow/default.env
+- path: ../../Apps/OpenWebUI/compose.yml
+  env_file:
+  - ../../Apps/OpenWebUI/default.env
+- path: ../../Apps/Searxng/compose.yml
+  env_file:
+  - ../../Apps/Searxng/default.env
+- path: ../../Apps/Jellyfin/compose.yml
+  env_file:
+  - ../../Apps/Jellyfin/default.env
+- path: ../../Apps/Metube/compose.yml
+  env_file:
+  - ../../Apps/Metube/default.env
+- path: ../../Apps/Jupyter/compose.yml
+  env_file:
+  - ../../Apps/Jupyter/default.env
+- path: ../../Apps/Metabase/compose.yml
+  env_file:
+  - ../../Apps/Metabase/default.env
+- path: ../../Apps/Postgres/compose.yml
+  env_file:
+  - ../../Apps/Postgres/default.env
+- path: ../../Apps/Activepieces/compose.yml
+  env_file:
+  - ../../Apps/Activepieces/default.env
+- path: ../../Apps/Fusion/compose.yml
+  env_file:
+  - ../../Apps/Fusion/default.env

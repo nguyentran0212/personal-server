@@ -1,0 +1,4 @@
+metadata:
+  name: Netshoot
+  type: foundation
+  description: (Part of Foundation Stack) Utility container for debugging network problems in the stack

@@ -8,3 +8,5 @@
 *.log
 .env
 !default.env
+.$*
+**/__pycache__

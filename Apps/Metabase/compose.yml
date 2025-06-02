@@ -17,7 +17,8 @@ services:
       MB_DB_HOST: postgres
       MB_SITE_URL: "http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}"
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
+      - metabase-net
     healthcheck:
       test: curl --fail -I http://localhost:3000/api/health || exit 1
       interval: 15s
@@ -29,7 +30,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
-      - "traefik.docker.network=traefik-net"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Data Analytics" # Group for this service on the homepage
       - "homepage.name=Metabase" # Name of this service on the homepage
       - "homepage.icon=metabase.png" # Pick from https://github.com/homarr-labs/dashboard-icons
@@ -46,8 +47,11 @@ services:
       POSTGRES_DB: metabaseappdb
       POSTGRES_PASSWORD: mysecretpassword
     networks:
-      - traefik-net
+      - metabase-net
 
   
 volumes:
   metabase-pg-data:
+
+networks:
+  metabase-net:

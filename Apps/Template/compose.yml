@@ -13,13 +13,15 @@ services:
       - open-webui:/app/backend/data
     restart: unless-stopped
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
+      - openwebui-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true" # Enable reverse proxy
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)" # Domain names to reach the app
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}" # Tell reverse proxy which port to use
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Homepage_Group" # Group for this service on the homepage
       - "homepage.name=Homepage_Name" # Name of this service on the homepage
       - "homepage.icon=jellyfin.png" # Pick from https://github.com/homarr-labs/dashboard-icons
@@ -33,9 +35,12 @@ services:
       - ./searxng:/etc/searxng
     restart: unless-stopped
     networks:
-      - traefik-net
+      - openwebui-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
 volumes:
   open-webui:
+
+networks:
+  openwebui-net:

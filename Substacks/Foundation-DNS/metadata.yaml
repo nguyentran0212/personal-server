@@ -1,0 +1,4 @@
+metadata:
+  name: Foundation-DNS
+  type: foundation
+  description: Foundation stack for LAN use (Traefik + PiHole)

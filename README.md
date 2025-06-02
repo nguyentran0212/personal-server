@@ -2,7 +2,7 @@
 
 <img src="Assets/logo.jpg" alt="My Image" width="300" />
 
-A collection of composable recipes to deploy software stacks for your server.
+Preconfigured, composable recipes and utilities to craft your Dockerised server.
 
 ## Why
 
@@ -35,12 +35,30 @@ It means with "recipies" inside Server Stack, you can define a new stack for you
 
 If an app you need does not exist, you can use the included template to integrate it.
 
+![](/Docs/Architecture/stack_architecture.png)
+
 
 ## User Manual
 
 Server Craft is an *opinionated* collection of "recipes" that can be combined to create a software stack for your server. Some recipes describe how a particular *application* (e.g., Jupyter Lab, Metabase, Jellyfin, Langflow, etc.) is configured and deployed. Other recipes describe how applications are combined to form a *substack*, such as data analysis or GenAI applications. Substacks come together to create *stacks* that you can deploy on your server. 
 
-As a **user**, you either **deploy** or **create** a Server Craft stack recipe on your server.
+As a **user**, you can manage your server stacks using the `servercraft` CLI. Before you begin, ensure you have:
+- Docker Engine and Docker Compose installed.
+- Python 3.10 or newer and Poetry installed.
+
+After cloning this repository, install the CLI dependencies:
+
+```bash
+poetry install
+```
+
+Run `servercraft --help` to see all available commands. Key commands include:
+- `servercraft list-apps`     List all available applications and their descriptions  
+- `servercraft list-stacks`   List all existing stacks  
+- `servercraft create <NAME>` Scaffold a new stack named `<NAME>`  
+- `servercraft start <NAME>`  Start the Docker stack `<NAME>`  
+- `servercraft stop <NAME>`   Stop the Docker stack `<NAME>`  
+- `servercraft inspect <NAME>` Show configuration, missing variables, and next steps for `<NAME>`  
 
 
 ### Deploy a Stack
@@ -91,26 +109,32 @@ STACK_NAME="my_stack" # Name of the stack
 TRAEFIK_NETWORK="traefik-net" # Name of the network docker compose would create for reverse proxy
 ```
 
-### Create a stack
+### Create a stack via CLI
 
-So far, you have used the prebuilt `Office-Lab` stack for demonstration. You can make your own stack based on the existing Apps and Substacks.
+Scaffold a new stack using the `servercraft` command:
 
-**Because your stack is private to your use case and server, it is highly recommended that you fork Server Craft to your GitHub and modify that copy.**
+```bash
+poetry run servercraft create my-local-stack
+```
 
-``` bash
-# Create a new stack based on the template
-cd Stacks/
-cp Template My-Stack
-cd My-Stack
+This will:
+- Copy the Template stack into `Stacks/my-local-stack/`  
+- Prompt for your domain, timezone, LAN CIDR, media/work directories  
+- Prompt to select a foundation substack (e.g. DNS-TS)  
+- Prompt to select apps to include  
+- Generate a complete `.env` with auto-generated secrets and `CHANGE_ME` placeholders  
 
-# Edit compose.yml to include substacks and apps
-# You need to keep the foundation substack to keep reverse proxy and monitoring!
+After creation, inspect pending tasks:
 
-# Modify your compose.override.yml if needed
+```bash
+servercraft inspect my-local-stack
+```
 
-# Create your my-stack.env based on default.env
+When ready, start and stop the stack with:
 
-# Enjoy your new stack!
+```bash
+servercraft start my-local-stack
+servercraft stop my-local-stack
 ```
 
 ## Developer Manual

@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "servercraft"
+version = "0.1.0"
+description = "CLI tool to automate Docker stack creation"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = ">=8.1,<8.2"
+typer = {extras = ["all"], version = "^0.10"}
+PyYAML = "^6.0"
+questionary = "^1.10"
+python-dotenv = "^1.0"
+
+[tool.poetry.scripts]
+servercraft = "servercraft.main:app"

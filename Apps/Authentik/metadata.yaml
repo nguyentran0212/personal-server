@@ -1,0 +1,4 @@
+metadata:
+  name: Authentik
+  type: foundation
+  description: (Part of Foundation Stacks) Identity provider for internal SSO setup.

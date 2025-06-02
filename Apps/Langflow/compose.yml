@@ -10,13 +10,15 @@ services:
       - langflow-data:/app/langflow
     restart: unless-stopped
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
+      - langflow-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=GenAI Tools" # Group for this service on the homepage
       - "homepage.name=Langflow" # Name of this service on the homepage
       - "homepage.icon=openai.png" # Pick from https://github.com/homarr-labs/dashboard-icons
@@ -33,7 +35,7 @@ services:
       - langflow-postgres:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-      - traefik-net
+      - langflow-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
     # labels:
@@ -45,3 +47,6 @@ services:
 volumes:
   langflow-postgres:
   langflow-data:
+
+networks:
+  langflow-net:

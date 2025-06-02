@@ -6,13 +6,14 @@ services:
       - ./searxng:/etc/searxng
     restart: unless-stopped
     networks:
-      - traefik-net
+      - ${TRAEFIK_NETWORK}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}" # Add this line if traefik cannot detect the port of this container
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
       - "homepage.group=Misc" # Group for this service on the homepage
       - "homepage.name=Searxng" # Name of this service on the homepage
       - "homepage.icon=searxng.png" # Pick from https://github.com/homarr-labs/dashboard-icons
