@@ -217,11 +217,6 @@ def create(stack_name: str):
 
     (dest / ".env").write_text("\n".join(out_lines))
 
-    # Make scripts executable
-    for script in ["start.sh", "stop.sh"]:
-        p = dest / script
-        p.chmod(p.stat().st_mode | 0o111)
-
     typer.secho(f"Stack '{stack_name}' created successfully!", fg=typer.colors.GREEN)
     # Post‐install inspection
     inspect_stack(stack_name)

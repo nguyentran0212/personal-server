@@ -123,7 +123,6 @@ This will:
 - Prompt to select a foundation substack (e.g. DNS-TS)  
 - Prompt to select apps to include  
 - Generate a complete `.env` with auto-generated secrets and `CHANGE_ME` placeholders  
-- Make `start.sh` and `stop.sh` executable  
 
 After creation, inspect pending tasks:
 
