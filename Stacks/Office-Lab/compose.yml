@@ -14,6 +14,9 @@ include:
   - path: "../../Apps/Metabase/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/Metabase/default.env
+  - path: "../../Apps/Activepieces/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Activepieces/default.env
   - path: "../../Apps/Jupyter/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/Jupyter/default.env
