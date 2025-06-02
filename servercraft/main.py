@@ -192,6 +192,20 @@ def create(stack_name: str):
     hosts = list(network.hosts())
     server_ip = hosts[0] if hosts else network.network_address
     records = []
+    # include apps inside foundation substack
+    f_compose = foundation_path / "compose.yml"
+    if f_compose.exists():
+        f_data = yaml.safe_load(f_compose.read_text())
+        for inc in f_data.get("include", []):
+            path_str = inc.get("path", "")
+            if "/Apps/" in path_str:
+                app_dir = (foundation_path / path_str).resolve().parent
+                env_map = dotenv_values(app_dir / "default.env")
+                for k, v in env_map.items():
+                    if k.endswith("_DOMAIN") and v:
+                        fqdn = f"{v}.{top['HOME_SERVER_DOMAIN']}"
+                        records.append(f"{server_ip} {fqdn}")
+    # selected app-specific records
     for app_path in app_paths:
         env_map = dotenv_values(app_path / "default.env")
         for k, v in env_map.items():
