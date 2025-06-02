@@ -8,6 +8,7 @@ services:
       - persistence-pg-data:/var/lib/postgresql/data/
     networks:
       - postgres-net
+      - ${TRAEFIK_NETWORK}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
