@@ -9,8 +9,8 @@ Backups ensure that critical data stored in Docker volumes can be recovered in c
 Nautical is a lightweight, containerized backup solution that:
 - Operates as a Docker service with a built-in scheduler.
 - Uses Docker labels to identify and group volumes.
-- Creates compressed archives (`.tar.gz`) of specified volumes.
-- Resumes application containers after snapshotting to maintain consistency.
+- Know to stop and restart containers to avoid corrupting databases.
+
 
 ## 2. How Nautical Is Wired into Your Stack
 
@@ -20,18 +20,19 @@ The foundation stack includes the Nautical service via:
 include:
   - path: "../../Apps/Nautical/compose.yml"
 ```
-This brings in the Nautical container and its default configuration.
+This brings in the Nautical container and its default configuration. 
 
-### 2.2. Docker Compose “include” of `Apps/Nautical/compose.yml`
-By using our Compose “include” mechanism, Nautical is injected alongside core services (Traefik, Authentik, Homepage, etc.) without modifying their individual Compose files.
+From now on, any stack built upon any foundation stack would have Nautical running in the background by default.
 
-### 2.3. Overview of the Nautical container and its built-in scheduler
+### 2.2. Overview of the Nautical container and its built-in scheduler
 - Nautical reads three environment variables (`BACKUP_SOURCE_DIR`, `BACKUP_DESTINATION_DIR`, `BACKUP_SCHEDULE`) to locate volumes, choose a destination, and schedule tasks.
 - It scans containers by Docker labels, groups them, pauses them, archives volumes, then resumes them.
 
-## 3. Grouping Services & Volumes via Nautical Labels
+## 3. Configure Backup of an Application Stack
 
-### 3.1. nautical-backup.group
+Within the Docker compose of your application stack, you need to assign labels to your services. See `../Apps/Authentik/compose.yml` for an example.
+
+### 3.1. Define nautical-backup.group
 Assign the **same group name** (e.g. `authentik`) to all related services so Nautical will:
 1. Pause every container in the group.
 2. Snapshot each specified volume.
@@ -39,15 +40,14 @@ Assign the **same group name** (e.g. `authentik`) to all related services so Nau
 This ensures a consistent state across multi-container applications.
 
 ### 3.2. nautical-backup.override-source-dir
-Explicitly points Nautical at the host’s Docker volume directory for a given service. For example:
+Explicitly points Nautical at the container used by a service. For example:
 - `${STACK_NAME}_database`
 - `${STACK_NAME}_redis`  
-This overrides the default scan of `BACKUP_SOURCE_DIR` and targets exactly the named volume.
+
+This step is necessary because Nautical expects volumes to have the same name as the service by default, which is not the case with our stack. In order for Nautical to see the correct volume, we need to override so that nautical looks for `${STACK_NAME}_volume_name` instead.
 
 ### 3.3. nautical-backup.source-dir-required
-When set to `false` on stateless services (application servers or workers), Nautical:
-- Still includes those containers in the **pause/resume** sequence.
-- Skips volume backup for them, avoiding errors when no volume is present.
+When set to `false` on stateless services (application servers or workers), Nautical will restart these services even though they do not have any volume to backup. This design minimize the risk of corruption in these services.
 
 ### 3.4. Authentik Example
 ```yaml
