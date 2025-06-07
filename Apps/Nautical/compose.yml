@@ -1,0 +1,11 @@
+sservices:
+  nautical-backup:
+    image: minituff/nautical-backup:2 
+    container_name: nautical-backup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${BACKUP_SOURCE_DIR}:/app/source:ro
+      - ${BACKUP_DESTINATION_DIR}:/app/destination
+    environment: # Optional variables
+      - TZ=${HOME_SERVER_TZ}
+      - CRON_SCHEDULE=${BACKUP_SCHEDULE}
