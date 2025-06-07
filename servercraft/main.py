@@ -64,6 +64,93 @@ def prompt_dir(prompt: str, default: str = "") -> str:
             continue
         return str(abs_path)
 
+def validate_time_str(time_str: str) -> bool:
+    try:
+        parts = time_str.split(":")
+        if len(parts) != 2:
+            return False
+        hour = int(parts[0])
+        minute = int(parts[1])
+        return 0 <= hour <= 23 and 0 <= minute <= 59
+    except Exception:
+        return False
+
+def validate_cron_string(expr: str) -> bool:
+    parts = expr.split()
+    if len(parts) != 5:
+        return False
+    minute, hour, dom, month, dow = parts
+    def check(val, min_v, max_v):
+        if val == "*":
+            return True
+        if val.isdigit():
+            v = int(val)
+            return min_v <= v <= max_v
+        return False
+    if not check(minute, 0, 59):
+        return False
+    if not check(hour, 0, 23):
+        return False
+    if not (dom == "*" or (dom.isdigit() and 1 <= int(dom) <= 31)):
+        return False
+    if not (month == "*" or (month.isdigit() and 1 <= int(month) <= 12)):
+        return False
+    if not check(dow, 0, 7):
+        return False
+    return True
+
+def prompt_cron_schedule() -> str:
+    """
+    Prompt the user to define backup frequency and construct a cron string.
+    """
+    while True:
+        freq = questionary.select(
+            "How often should backups run?",
+            choices=["Hourly", "Daily", "Weekly", "Custom"]
+        ).ask()
+        if freq == "Hourly":
+            cron_expr = "0 * * * *"
+        elif freq == "Daily":
+            while True:
+                time_str = questionary.text("Daily backup time (HH:MM):", default="04:00").ask()
+                if validate_time_str(time_str):
+                    break
+                typer.secho(
+                    f"Invalid time '{time_str}'. Please use HH:MM with 00<=HH<=23, 00<=MM<=59.",
+                    fg=typer.colors.RED
+                )
+            hour, minute = time_str.split(":")
+            cron_expr = f"{minute} {hour} * * *"
+        elif freq == "Weekly":
+            day = questionary.select(
+                "Day of week for weekly backups:",
+                choices=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+            ).ask()
+            while True:
+                time_str = questionary.text("Time of day (HH:MM):", default="04:00").ask()
+                if validate_time_str(time_str):
+                    break
+                typer.secho(
+                    f"Invalid time '{time_str}'. Please use HH:MM with 00<=HH<=23, 00<=MM<=59.",
+                    fg=typer.colors.RED
+                )
+            hour, minute = time_str.split(":")
+            dow_map = {
+                "Monday":"1","Tuesday":"2","Wednesday":"3","Thursday":"4",
+                "Friday":"5","Saturday":"6","Sunday":"0"
+            }
+            cron_expr = f"{minute} {hour} * * {dow_map[day]}"
+        else:
+            minute = questionary.text("Cron minute [0-59]:", default="0").ask()
+            hour = questionary.text("Cron hour [0-23]:", default="4").ask()
+            dom = questionary.text("Cron day of month [1-31]:", default="*").ask()
+            month = questionary.text("Cron month [1-12]:", default="*").ask()
+            dow = questionary.text("Cron day of week [0-6]:", default="*").ask()
+            cron_expr = f"{minute} {hour} {dom} {month} {dow}"
+        if validate_cron_string(cron_expr):
+            return cron_expr
+        typer.secho(f"Invalid schedule '{cron_expr}'. Please try again.", fg=typer.colors.RED)
+
 def scan_foundations():
     foundations = []
     for p in SUBSTACKS_DIR.iterdir():
@@ -128,6 +215,19 @@ def create(stack_name: str):
     # Directories with existence check
     top["MEDIA_DIR"] = prompt_dir("Media directory:", default="")
     top["WORK_DIR"] = prompt_dir("Work directory:", default="")
+    # Nautical backup settings
+    # Infer backup source directory
+    try:
+        output = subprocess.run(
+            ["docker", "info", "--format", "{{ .DockerRootDir }}"],
+            capture_output=True, text=True
+        ).stdout.strip()
+        backup_source = f"{output}/volumes" if output else "/var/lib/docker/volumes"
+    except Exception:
+        backup_source = "/var/lib/docker/volumes"
+    top["BACKUP_SOURCE_DIR"] = backup_source
+    top["BACKUP_DESTINATION_DIR"] = prompt_dir("Backup destination directory:", default="~/backups")
+    top["BACKUP_SCHEDULE"] = prompt_cron_schedule()
 
     # Foundation choice
     foundations = scan_foundations()

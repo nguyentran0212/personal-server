@@ -1,24 +1,7 @@
-# Foundation stack contains the core networking components that would be used by any other stack:
-# - Traefik: reverse proxy
-# - PiHole: DNS server and ad-blocker
-# - Portainer: managing docker containers
-# - Homepage: homepage dashboard
-# - Authentik: Identity Provider (IdP) to support SSO and LDAP inside the stack
+# Expanding foundation stack to include DNS server support with PiHole
 
 include:
-  - path: "../../Apps/Traefik/compose.yml" ## Traefik: reverse proxy
+  - path: "../Foundation-Local/compose.yml" ## Foundation stack
   - path: "../../Apps/PiHole/compose.yml" ## App with custom envs
     env_file:
        - ../../Apps/PiHole/default.env
-  - path: "../../Apps/Portainer/compose.yml" ## App with custom envs
-    env_file:
-       - ../../Apps/Portainer/default.env
-  - path: "../../Apps/Authentik/compose.yml" ## App with custom envs
-    env_file:
-       - ../../Apps/Authentik/default.env
-  - path: "../../Apps/Homepage/compose.yml" ## App with custom envs
-    env_file:
-       - ../../Apps/Homepage/default.env
-
-networks:
-  traefik-net: # Traefik network connecting internal apps to the reverse proxy

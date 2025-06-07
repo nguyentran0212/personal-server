@@ -34,6 +34,10 @@ layout:
   Foundation:
     style: row
     columns: 4
+  Backup:
+    style: row
+    columns: 2
+
 
 providers:
   openweathermap: openweathermapapikey
