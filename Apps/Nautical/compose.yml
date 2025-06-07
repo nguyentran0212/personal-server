@@ -1,7 +1,9 @@
-sservices:
+services:
   nautical-backup:
     image: minituff/nautical-backup:2 
     container_name: nautical-backup
+    networks:
+      - ${TRAEFIK_NETWORK}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${BACKUP_SOURCE_DIR}:/app/source:ro
@@ -9,3 +11,4 @@ sservices:
     environment: # Optional variables
       - TZ=${HOME_SERVER_TZ}
       - CRON_SCHEDULE=${BACKUP_SCHEDULE}
+      # - BACKUP_ON_START=true

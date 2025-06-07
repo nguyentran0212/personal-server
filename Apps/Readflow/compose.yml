@@ -17,6 +17,9 @@ services:
       - readflow-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    labels:
+      - "nautical-backup.group=readflow"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_readflow-db-data"
 
   ########################################
   # readflow
@@ -45,6 +48,8 @@ services:
       - "homepage.icon=google-news.svg" # Pick from https://github.com/homarr-labs/dashboard-icons
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
       - "homepage.description=News-reading solution" # Description of this service on the homepage
+      - "nautical-backup.group=readflow"
+      - "nautical-backup.source-dir-required=false"
 
 volumes:
   readflow-db-data:

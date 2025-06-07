@@ -14,6 +14,9 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    labels:
+      - "nautical-backup.group=postgres"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_persistence-pg-data"
 
   adminer:
     image: adminer:5
@@ -35,6 +38,8 @@ services:
       - "homepage.icon=postgres.png" # Pick from https://github.com/homarr-labs/dashboard-icons
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
       - "homepage.description=Shared relational DB" # Description of this service on the homepage
+      - "nautical-backup.group=postgres"
+      - "nautical-backup.source-dir-required=false"
 
 volumes:
   persistence-pg-data:

@@ -26,6 +26,8 @@ services:
       - "homepage.icon=jellyfin.png"
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/"
       - "homepage.description=Media server"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_jellyfin-config"
+      - "nautical-backup.additional-folders=${STACK_NAME}_jellyfin-cache"
 
 volumes:
   jellyfin-config:

@@ -23,6 +23,8 @@ services:
       - "homepage.icon=audiobookshelf.svg" # Pick from https://github.com/homarr-labs/dashboard-icons
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
       - "homepage.description=Audio book and podcasts" # Description of this service on the homepage
+      - "nautical-backup.override-source-dir=${STACK_NAME}_audiobookshelf-config"
+      - "nautical-backup.additional-folders=${STACK_NAME}_audiobookshelf-metadata"
 
 volumes:
   audiobookshelf-config:

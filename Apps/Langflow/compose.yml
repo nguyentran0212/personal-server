@@ -24,6 +24,8 @@ services:
       - "homepage.icon=openai.png" # Pick from https://github.com/homarr-labs/dashboard-icons
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
       - "homepage.description=Low-code LLM agent builder" # Description of this service on the homepage
+      - "nautical-backup.group=langflow"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_langflow-data"
 
   langflow-postgres:
     image: postgres:latest
@@ -38,11 +40,9 @@ services:
       - langflow-net
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`)"
-    #   - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.localhost`)"
-      # - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=PORT" # Add this line if traefik cannot detect the port of this container
+    labels:
+      - "nautical-backup.group=langflow"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_langflow-postgres"
 
 volumes:
   langflow-postgres:

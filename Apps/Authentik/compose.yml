@@ -16,8 +16,12 @@ services:
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
       POSTGRES_USER: ${PG_USER:-authentik}
       POSTGRES_DB: ${PG_DB:-authentik}
+    labels:
+      - "nautical-backup.group=authentik"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_database"
     # env_file:
     #   - .env
+    #
   authentik-redis:
     image: docker.io/library/redis:alpine
     command: --save 60 1 --loglevel warning
@@ -32,6 +36,9 @@ services:
       timeout: 3s
     volumes:
       - redis:/data
+    labels:
+      - "nautical-backup.group=authentik"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_redis"
 
   authentik-server:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.4.0}
@@ -45,14 +52,6 @@ services:
       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-    # volumes:
-    #   - ./media:/media
-    #   - ./custom-templates:/templates
-    # env_file:
-    #   - .env
-    # ports:
-    #   - "${COMPOSE_PORT_HTTP:-9000}:9000"
-    #   - "${COMPOSE_PORT_HTTPS:-9443}:9443"
     networks:
       - ${TRAEFIK_NETWORK}
       - authentik-net
@@ -68,6 +67,8 @@ services:
       - "homepage.icon=authentik.png" # Pick from https://github.com/homarr-labs/dashboard-icons
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
       - "homepage.description=Identity Provider" # Description of this service on the homepage
+      - "nautical-backup.group=authentik"
+      - "nautical-backup.source-dir-required=false"
     depends_on:
       authentik-postgresql:
         condition: service_healthy
@@ -106,6 +107,9 @@ services:
         condition: service_healthy
       authentik-redis:
         condition: service_healthy
+    labels:
+      - "nautical-backup.group=authentik"
+      - "nautical-backup.source-dir-required=false"
 
 volumes:
   database:

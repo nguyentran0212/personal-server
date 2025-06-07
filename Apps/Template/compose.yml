@@ -27,6 +27,8 @@ services:
       - "homepage.icon=jellyfin.png" # Pick from https://github.com/homarr-labs/dashboard-icons
       - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
       - "homepage.description=Media server" # Description of this service on the homepage
+      - "nautical-backup.override-source-dir=${STACK_NAME}_openwebui"
+      - "nautical-backup.additional-folders=${STACK_NAME}_openwebui"
 
   searxng: # Dependent services. Hidden from proxy and homepage.
     image: searxng/searxng:2025.5.13-1a8884f    
