@@ -374,10 +374,13 @@ def create(stack_name: str):
         name = app_path.name
         out_lines.append(f"# {name} settings")
         env_map = dotenv_values(app_path / "default.env")
-        for k in env_map:
-            if k.startswith("SECRET_") or k.endswith("_KEY"):
+        for k, default_val in env_map.items():
+            # auto-generate only if truly blank
+            if (k.startswith("SECRET_") or k.endswith("_KEY")) and not default_val:
                 val = secrets.token_urlsafe()
                 out_lines.append(f'{k}="{val}"')
+            elif k.startswith("SECRET_") or k.endswith("_KEY"):
+                out_lines.append(f'{k}="{default_val}"')
             elif k.startswith("OIDC_"):
                 out_lines.append(f'{k}="CHANGE_ME"')
         out_lines.append("")
