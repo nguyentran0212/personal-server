@@ -241,6 +241,34 @@ def create(stack_name: str):
     selected = questionary.checkbox("Select apps:", choices=app_names).ask()
     app_paths = [dict(apps)[name] for name in selected]
 
+    # === New: collect userConfig & volumes from each app ===
+    user_vars = {}
+    volume_vars = {}
+    for app_path in app_paths:
+        meta = yaml.safe_load((app_path / "metadata.yaml").read_text())
+
+        # 1) prompt for userConfig vars
+        for spec in meta.get("userConfig", []):
+            key = spec["name"]
+            prompt_str = spec["prompt"]
+            default_val = spec.get("default", "")
+            if spec.get("type") == "enum":
+                ans = questionary.select(prompt_str, choices=spec["options"], default=default_val).ask()
+            else:
+                ans = questionary.text(prompt_str, default=default_val).ask()
+            user_vars[key] = ans or default_val
+
+        # 2) prompt for each host-mount directory
+        for vol in meta.get("volumes", []):
+            key = vol["hostPathKey"]
+            prompt_str = vol["prompt"]
+            default_val = vol.get("default", "")
+            abs_path = Path(prompt_dir(prompt_str, default=default_val))
+            rel = os.path.relpath(abs_path, dest)
+            (dest / rel).mkdir(parents=True, exist_ok=True)
+            volume_vars[key] = rel
+    # =========================================================
+
     # Update compose.yml includes
     compose_file = dest / "compose.yml"
     compose_data = yaml.safe_load(compose_file.read_text())
@@ -327,6 +355,20 @@ def create(stack_name: str):
                 out_lines.append(f'{k}="{val}"')
             elif k.startswith("OIDC_"):
                 out_lines.append(f'{k}="CHANGE_ME"')
+        out_lines.append("")
+
+    # Group 4: App user configuration
+    if user_vars:
+        out_lines.append("# App user configuration")
+        for k, v in user_vars.items():
+            out_lines.append(f'{k}="{v}"')
+        out_lines.append("")
+
+    # Group 5: App volume mounts
+    if volume_vars:
+        out_lines.append("# App volume mounts")
+        for k, v in volume_vars.items():
+            out_lines.append(f'{k}="{v}"')
         out_lines.append("")
 
     (dest / ".env").write_text("\n".join(out_lines))

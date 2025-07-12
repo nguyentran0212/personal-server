@@ -9,7 +9,7 @@ services:
       USER_PERSONA: ${LIFE_ENGINEER_USER_PERSONA}
     volumes:
       - life-engineer-data:/data
-      # - .bootstrap:/tmp/life_engineer:ro
+      - ${BOOTSTRAP_DIR}:/tmp/life_engineer:ro
     restart: unless-stopped
     networks:
       - ${TRAEFIK_NETWORK}
