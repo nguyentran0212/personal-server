@@ -283,14 +283,8 @@ def create(stack_name: str):
             abs_str = prompt_dir(prompt_str, default=default_str)
             abs_path = Path(abs_str).resolve()
 
-            # If inside stack dir, use relative mount
-            try:
-                rel_path = abs_path.relative_to(dest)
-                mount_path = f"./{rel_path}"
-            except ValueError:
-                # Outside stack: use absolute path
-                mount_path = str(abs_path)
-
+            # Always use absolute host path for mounts
+            mount_path = str(abs_path)
             volume_vars[key] = mount_path
     # =========================================================
 
