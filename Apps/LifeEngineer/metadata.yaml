@@ -4,18 +4,22 @@ metadata:
   description: AI Engineer for your life
   projectUrl: https://github.com/nguyentran0212/life-engineer
 
-  userConfig:
-    - name: LIFE_ENGINEER_ASSISTANT_PERSONA
-      prompt: "Choose your assistant persona"
-      type: string
-      default: "max"
-    - name: LIFE_ENGINEER_USER_PERSONA
-      prompt: "Choose your user persona"
-      type: string
-      default: "gen"
+userConfig:
+  - name: LIFE_ENGINEER_ASSISTANT_PERSONA
+    prompt: "Choose your assistant persona"
+    type: string
+    default: "max"
+  - name: LIFE_ENGINEER_USER_PERSONA
+    prompt: "Choose your user persona"
+    type: string
+    default: "gen"
 
-  volumes:
-    - hostPathKey: BOOTSTRAP_DIR
-      prompt: "Path to your bootstrap folder"
-      default: "./.bootstrap"
-      containerMount: "/tmp/life_engineer"
+volumes:
+  - hostPathKey: BOOTSTRAP_DIR
+    prompt: "Path to your bootstrap folder"
+    default: "./.bootstrap"
+    containerMount: "/tmp/life_engineer"
+
+postInstall:
+  - "Copy your initial .bootstrap files into the BOOTSTRAP_DIR folder."
+  - "Ensure OPENAI_API_KEY is set in your .env before starting the stack."
