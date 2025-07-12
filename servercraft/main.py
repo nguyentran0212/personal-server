@@ -62,13 +62,14 @@ def prompt_dir(prompt: str, default: str = "") -> str:
 
         # Otherwise ask to create it
         if questionary.confirm(
-            f"Directory '{abs_path}' does not exist. Create it now?"
-        ).ask(default=True):
+            f"Directory '{abs_path}' does not exist. Create it now?",
+            default=True
+        ).ask():
             abs_path.mkdir(parents=True, exist_ok=True)
             return str(abs_path)
 
         # If they refuse, allow retry or exit
-        if questionary.confirm("Do you want to try a different path?").ask(default=True):
+        if questionary.confirm("Do you want to try a different path?", default=True).ask():
             continue
         return str(abs_path)
 
