@@ -15,11 +15,16 @@ userConfig:
     default: "gen"
 
 volumes:
-  - hostPathKey: BOOTSTRAP_DIR
-    prompt: "Path to your bootstrap folder"
-    default: "./.bootstrap"
+  - hostPathKey: LIFE_ENGINEER_BOOTSTRAP_DIR
+    prompt: "Path to your bootstrap folder where you provide your seed taskwarrior database to be used"
+    default: "./life-engineer-bootstrap"
+    containerMount: "/tmp/life_engineer"
+  - hostPathKey: LIFE_ENGINEER_PERSONA_DIR
+    prompt: "Path to your directory where you provide personas for yourself and AI that you want to use"
+    default: "./life-engineer-personas"
     containerMount: "/tmp/life_engineer"
 
 postInstall:
-  - "Copy your initial .bootstrap files into the BOOTSTRAP_DIR folder."
-  - "Ensure OPENAI_API_KEY is set in your .env before starting the stack."
+  - "Remember to copy your .taskwarrior directory into the LIFE_ENGINEER_BOOTSTRAP_DIR folder if you want to use existing task database with your life engineer instance."
+  - "Remember to add to LIFE_ENGINEER_PERSONA_DIR folder with the persona.txt files for the user and assistant persona that you want to use with your life engineer instance."
+  - "Ensure OPENAI_API_KEY is set in your .env or in your terminal before starting the stack."

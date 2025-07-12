@@ -7,9 +7,12 @@ services:
       NEXT_PUBLIC_TIMEZONE: ${HOME_SERVER_TZ}
       ASSISTANT_PERSONA: ${LIFE_ENGINEER_ASSISTANT_PERSONA}
       USER_PERSONA: ${LIFE_ENGINEER_USER_PERSONA}
+      FASTAPI_BACKEND_URL: http://127.0.0.1:8000
+      PERSONA_DIRS: /personas
     volumes:
       - life-engineer-data:/data
-      - ${BOOTSTRAP_DIR}:/tmp/life_engineer:ro
+      - ${LIFE_ENGINEER_PERSONA_DIR}:/personas:ro
+      - ${LIFE_ENGINEER_BOOTSTRAP_DIR}:/tmp/life_engineer:ro
     restart: unless-stopped
     networks:
       - ${TRAEFIK_NETWORK}
