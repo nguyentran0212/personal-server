@@ -438,6 +438,21 @@ def inspect_stack(stack_name: str):
     else:
         typer.secho("All environment variables are set.", fg=typer.colors.GREEN)
 
+    # Post-install reminders
+    reminders = []
+    for inc in includes:
+        p = inc.get("path", "")
+        if "/Apps/" in p:
+            meta_path = (dest / p).resolve().parent / "metadata.yaml"
+            if meta_path.exists():
+                md = yaml.safe_load(meta_path.read_text())
+                for msg in md.get("postInstall", []):
+                    reminders.append(f"[{md['metadata']['name']}] {msg}")
+    if reminders:
+        typer.secho("Post-install reminders:", fg=typer.colors.CYAN, bold=True)
+        for r in reminders:
+            typer.echo(f"  - {r}")
+
     typer.echo("Inspection complete.")
 
 @app.command("start")
