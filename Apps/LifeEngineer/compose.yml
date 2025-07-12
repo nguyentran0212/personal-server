@@ -1,0 +1,31 @@
+services:
+  life-engineer: # Main service of this app. Accessible from proxy and homepage.
+    image: ghcr.io/nguyentran0212/life-engineer:master
+    environment: 
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      TIMEZONE: ${HOME_SERVER_TZ}
+      NEXT_PUBLIC_TIMEZONE: ${HOME_SERVER_TZ}
+      ASSISTANT_PERSONA: ${LIFE_ENGINEER_ASSISTANT_PERSONA}
+      USER_PERSONA: ${LIFE_ENGINEER_USER_PERSONA}
+    volumes:
+      - life-engineer-data:/data
+      # - .bootstrap:/tmp/life_engineer:ro
+    restart: unless-stopped
+    networks:
+      - ${TRAEFIK_NETWORK}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true" # Enable reverse proxy
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)" # Domain names to reach the app
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}" # Tell reverse proxy which port to use
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
+      - "homepage.group=GenAI Applications" # Group for this service on the homepage
+      - "homepage.name=Life Engineer" # Name of this service on the homepage
+      - "homepage.icon=openai.png" # Pick from https://github.com/homarr-labs/dashboard-icons
+      - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
+      - "homepage.description=Life Engineer" # Description of this service on the homepage
+      - "nautical-backup.override-source-dir=${STACK_NAME}_life-engineer-data"
+
+volumes:
+  life-engineer-data:
