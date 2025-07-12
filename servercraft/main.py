@@ -56,11 +56,19 @@ def prompt_dir(prompt: str, default: str = "") -> str:
                 f"'{abs_path}' is a system directory. Are you sure you want to use it?"
             ).ask():
                 continue
-        # Check existence
+        # If it already exists, we’re done
         if abs_path.exists():
             return str(abs_path)
-        # Offer retry if missing
-        if questionary.confirm(f"Directory '{abs_path}' does not exist. Try again?").ask():
+
+        # Otherwise ask to create it
+        if questionary.confirm(
+            f"Directory '{abs_path}' does not exist. Create it now?"
+        ).ask(default=True):
+            abs_path.mkdir(parents=True, exist_ok=True)
+            return str(abs_path)
+
+        # If they refuse, allow retry or exit
+        if questionary.confirm("Do you want to try a different path?").ask(default=True):
             continue
         return str(abs_path)
 
@@ -262,11 +270,27 @@ def create(stack_name: str):
         for vol in meta.get("volumes", []):
             key = vol["hostPathKey"]
             prompt_str = vol["prompt"]
-            default_val = vol.get("default", "")
-            abs_path = Path(prompt_dir(prompt_str, default=default_val))
-            rel = os.path.relpath(abs_path, dest)
-            (dest / rel).mkdir(parents=True, exist_ok=True)
-            volume_vars[key] = rel
+            raw_default = vol.get("default", "")
+
+            # Compute default path under stack directory
+            default_path = Path(raw_default)
+            if not default_path.is_absolute():
+                default_path = dest / default_path
+            default_str = str(default_path)
+
+            # Ask for it (creates it if missing)
+            abs_str = prompt_dir(prompt_str, default=default_str)
+            abs_path = Path(abs_str).resolve()
+
+            # If inside stack dir, use relative mount
+            try:
+                rel_path = abs_path.relative_to(dest)
+                mount_path = f"./{rel_path}"
+            except ValueError:
+                # Outside stack: use absolute path
+                mount_path = str(abs_path)
+
+            volume_vars[key] = mount_path
     # =========================================================
 
     # Update compose.yml includes
