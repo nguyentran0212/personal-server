@@ -372,6 +372,14 @@ def create(stack_name: str):
             if k.endswith("_DOMAIN") and v:
                 fqdn = f"{v}.{top['HOME_SERVER_DOMAIN']}"
                 records.append(f"{server_ip} {fqdn}")
+
+    # selected app-specific records 
+    for app_path in app_paths:                                    
+        env_map = dotenv_values(app_path / "default.env")        
+        for k, v in env_map.items(): 
+            if k.endswith("_DOMAIN") and v: 
+                fqdn = f"{v}.{top['HOME_SERVER_DOMAIN']}"
+                records.append(f"{server_ip} {fqdn}")  
     out_lines.append("# PiHole local DNS")
     out_lines.append(f'PIHOLE_LOCAL_DNS_RECORDS="{";".join(records)}"')
     out_lines.append("")
