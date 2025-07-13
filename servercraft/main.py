@@ -10,6 +10,7 @@ import typer
 import questionary
 from dotenv import dotenv_values
 import subprocess
+from typing import Set, List
 
 try:
     from zoneinfo import available_timezones
@@ -187,6 +188,24 @@ def scan_apps():
             apps.append((display, p))
     return apps
 
+def collect_included_dirs(compose_path: Path, base_dir: Path, visited: Set[Path]) -> List[Path]:
+    """
+    Recursively walk include: entries in a compose.yml.
+    Returns a list of directories for Apps or Substacks.
+    """
+    result: List[Path] = []
+    if compose_path in visited:
+        return result
+    visited.add(compose_path)
+    data = yaml.safe_load(compose_path.read_text())
+    for inc in data.get("include", []):
+        rel = inc["path"]
+        inc_file = (base_dir / rel).resolve()
+        subdir = inc_file.parent
+        result.append(subdir)
+        result += collect_included_dirs(inc_file, subdir, visited)
+    return result
+
 @app.command("create")
 def create(stack_name: str):
     """
@@ -254,12 +273,14 @@ def create(stack_name: str):
     user_vars = {}
     volume_vars = {}
     for app_path in app_paths:
+        app_name = app_path.name
+        typer.secho(f"\nConfiguring {app_name}", fg=typer.colors.CYAN, bold=True)
         meta = yaml.safe_load((app_path / "metadata.yaml").read_text())
 
         # 1) prompt for userConfig vars
         for spec in meta.get("userConfig", []):
             key = spec["name"]
-            prompt_str = spec["prompt"]
+            prompt_str = f"[{app_name}] " + spec["prompt"]
             default_val = spec.get("default", "")
             if spec.get("type") == "enum":
                 ans = questionary.select(prompt_str, choices=spec["options"], default=default_val).ask()
@@ -270,7 +291,7 @@ def create(stack_name: str):
         # 2) prompt for each host-mount directory
         for vol in meta.get("volumes", []):
             key = vol["hostPathKey"]
-            prompt_str = vol["prompt"]
+            prompt_str = f"[{app_name}] " + vol["prompt"]
             raw_default = vol.get("default", "")
 
             # Compute default path under stack directory
@@ -286,6 +307,7 @@ def create(stack_name: str):
             # Always use absolute host path for mounts
             mount_path = str(abs_path)
             volume_vars[key] = mount_path
+        typer.secho(f"✔ {app_name} configured\n", fg=typer.colors.GREEN)
     # =========================================================
 
     # Update compose.yml includes
@@ -339,22 +361,13 @@ def create(stack_name: str):
     hosts = list(network.hosts())
     server_ip = hosts[0] if hosts else network.network_address
     records = []
-    # include apps inside foundation substack
-    f_compose = foundation_path / "compose.yml"
-    if f_compose.exists():
-        f_data = yaml.safe_load(f_compose.read_text())
-        for inc in f_data.get("include", []):
-            path_str = inc.get("path", "")
-            if "/Apps/" in path_str:
-                app_dir = (foundation_path / path_str).resolve().parent
-                env_map = dotenv_values(app_dir / "default.env")
-                for k, v in env_map.items():
-                    if k.endswith("_DOMAIN") and v:
-                        fqdn = f"{v}.{top['HOME_SERVER_DOMAIN']}"
-                        records.append(f"{server_ip} {fqdn}")
-    # selected app-specific records
-    for app_path in app_paths:
-        env_map = dotenv_values(app_path / "default.env")
+    # gather all included sub-projects recursively
+    included_dirs = collect_included_dirs(foundation_path / "compose.yml", foundation_path, set())
+    for d in included_dirs:
+        envf = d / "default.env"
+        if not envf.exists():
+            continue
+        env_map = dotenv_values(envf)
         for k, v in env_map.items():
             if k.endswith("_DOMAIN") and v:
                 fqdn = f"{v}.{top['HOME_SERVER_DOMAIN']}"
