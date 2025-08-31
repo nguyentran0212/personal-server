@@ -13,6 +13,14 @@ userConfig:
     prompt: "Choose your user persona"
     type: string
     default: "gen"
+  - name: LIFE_ENGINEER_INITIAL_ADMIN_EMAIL
+    prompt: "Email for the default admin account of life engineer"
+    type: string
+    default: "admin@example.com"
+  - name: LIFE_ENGINEER_INITIAL_ADMIN_PASSWORD
+    prompt: "Password for the default admin account of life engineer"
+    type: string
+    default: "admin1234"
 
 volumes:
   - hostPathKey: LIFE_ENGINEER_BOOTSTRAP_DIR

@@ -2,13 +2,42 @@ services:
   life-engineer: # Main service of this app. Accessible from proxy and homepage.
     image: ghcr.io/nguyentran0212/life-engineer:master
     environment: 
+      # OpenAI Configuration
       OPENAI_API_KEY: ${OPENAI_API_KEY}
-      TIMEZONE: ${HOME_SERVER_TZ}
-      NEXT_PUBLIC_TIMEZONE: ${HOME_SERVER_TZ}
-      ASSISTANT_PERSONA: ${LIFE_ENGINEER_ASSISTANT_PERSONA}
-      USER_PERSONA: ${LIFE_ENGINEER_USER_PERSONA}
+      LLM_API_BASE: ${LLM_API_BASE}
+      LLM_MODEL: ${LLM_MODEL:-gpt-4.1-mini}
+      
+      # Timezone Configuration
+      TIMEZONE: ${HOME_SERVER_TZ:-Australia/Adelaide}
+      NEXT_PUBLIC_TIMEZONE: ${HOME_SERVER_TZ:-Australia/Adelaide}
+      
+      # Backend URL Configuration
       FASTAPI_BACKEND_URL: http://127.0.0.1:8000
+      
+      # Persona Configuration
+      ASSISTANT_PERSONA: ${LIFE_ENGINEER_ASSISTANT_PERSONA:-default_assistant}
+      USER_PERSONA: ${LIFE_ENGINEER_USER_PERSONA:-default_user}
+      
+      # Security Configuration
+      SECRET_KEY: ${LIFE_ENGINEER_SECRET:-a_very_secret_key}
+      
+      INITIAL_ADMIN_EMAIL: ${LIFE_ENGINEER_INITIAL_ADMIN_EMAIL:-admin@example.com} 
+      INITIAL_ADMIN_PASSWORD: ${LIFE_ENGINEER_INITIAL_ADMIN_PASSWORD:-admin1234}
+      
+      # NextAuth Configuration (for frontend)
+      NEXTAUTH_URL: http://127.0.0.1:3000
+      NEXTAUTH_URL_INTERNAL: http://127.0.0.1:3000
+      NEXTAUTH_SECRET: ${LIFE_ENGINEER_SECRET:-a_very_secret_key}
+      
+      # Gemini API Key (if using Gemini)
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      
+      # Work Directory
+      WORK_DIR: /data
+      
+      # Persona Directories
       PERSONA_DIRS: /personas
+
     volumes:
       - life-engineer-data:/data
       - ${LIFE_ENGINEER_PERSONA_DIR}:/personas:ro
