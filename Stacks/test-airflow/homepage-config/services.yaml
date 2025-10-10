@@ -1,0 +1,23 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+- Foundation:
+  - Nautical Backup:
+      icon: https://raw.githubusercontent.com/Minituff/nautical-backup/main/docs/media/Logo-large.png
+      description: Docker Volume Backups
+      widget:
+          type: customapi
+          url: http://nautical-backup:8069/api/v1/nautical/dashboard
+          username: admin
+          password: password
+          method: GET
+          mappings:
+          - field: number_of_containers
+            label: Total Containers
+          - field: completed
+            label: Completed
+          - field: skipped
+            label: Skipped
+          - field: last_cron 
+            label: Last Run
+            format: relativeDate 

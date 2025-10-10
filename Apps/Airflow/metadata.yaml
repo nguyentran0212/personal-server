@@ -1,0 +1,48 @@
+metadata:
+  name: Apache Airflow
+  type: app
+  description: Platform to programmatically author, schedule and monitor workflows
+  projectUrl: https://airflow.apache.org/
+
+userConfig:
+  - name: _AIRFLOW_WWW_USER_USERNAME
+    prompt: "Admin username for Airflow"
+    type: string
+    default: "admin"
+  - name: _AIRFLOW_WWW_USER_PASSWORD
+    prompt: "Admin password for Airflow"
+    type: string
+    default: "admin"
+  - name: AIRFLOW_UID
+    prompt: "Airflow user ID (default: 50000)"
+    type: string
+    default: "50000"
+  - name: AIRFLOW_IMAGE_NAME
+    prompt: "Airflow Docker image name (default: apache/airflow:3.1.0)"
+    type: string
+    default: "apache/airflow:3.1.0"
+
+volumes:
+  - hostPathKey: AIRFLOW_DAGS_DIR
+    prompt: "Directory for Airflow DAG files"
+    default: "./airflow/dags"
+    containerMount: "/opt/airflow/dags"
+  - hostPathKey: AIRFLOW_LOGS_DIR
+    prompt: "Directory for Airflow logs"
+    default: "./airflow/logs"
+    containerMount: "/opt/airflow/logs"
+  - hostPathKey: AIRFLOW_CONFIG_DIR
+    prompt: "Directory for Airflow configuration files"
+    default: "./airflow/config"
+    containerMount: "/opt/airflow/config"
+  - hostPathKey: AIRFLOW_PLUGINS_DIR
+    prompt: "Directory for Airflow plugins"
+    default: "./airflow/plugins"
+    containerMount: "/opt/airflow/plugins"
+
+postInstall:
+  - "After starting the stack, access Airflow at https://airflow.your_domain.com"
+  - "Default login credentials are admin/admin (unless changed during setup)"
+  - "Place your DAG files in the configured dags directory to make them available"
+  - "Airflow requires some time to initialize the database after first startup"
+  - "Check the airflow-init container logs to confirm initialization is complete"

@@ -1,0 +1,5 @@
+include:
+- path: ../../Substacks/Foundation-Local/compose.yml
+- path: ../../Apps/Airflow/compose.yml
+  env_file:
+  - ../../Apps/Airflow/default.env
