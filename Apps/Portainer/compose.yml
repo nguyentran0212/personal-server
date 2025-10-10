@@ -3,9 +3,9 @@
 services:
   portainer:
     image: portainer/portainer-ce:lts  # Specify the image
-    ports:
+    # ports:
     #   - "8000:8000"  # Map port 8000
-      - "9443:9443"  # Map port 9443
+    #   - "9443:9443"  # Map port 9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  # Share the Docker socket
       # - /run/podman/podman.sock:/var/run/docker.sock             #rootful
