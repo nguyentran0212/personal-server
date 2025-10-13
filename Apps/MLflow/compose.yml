@@ -1,0 +1,67 @@
+services:
+  mlflow-db: # PostgreSQL database for MLflow backend store
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    networks:
+      - mlflow-net
+    volumes:
+      - mlflow-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${MLFLOW_DB_PASS:?database password required}
+      POSTGRES_USER: ${MLFLOW_DB_USER:-mlflow}
+      POSTGRES_DB: ${MLFLOW_DB_NAME:-mlflow}
+    labels:
+      - "nautical-backup.group=mlflow"
+      - "nautical-backup.override-source-dir=${STACK_NAME}_mlflow-db"
+
+  mlflow-server: # Main MLflow tracking server
+    image: ghcr.io/mlflow/mlflow:v3.5.0rc0
+    restart: unless-stopped
+    command: >
+      bash -c "
+      pip install psycopg2-binary PyMySQL sqlalchemy boto3 &&
+      mlflow server --host 0.0.0.0 --port ${APP_PORT} --backend-store-uri ${MLFLOW_BACKEND_STORE_URI} --artifacts-destination ${MLFLOW_ARTIFACTS_DESTINATION} --workers 2 --allowed-hosts ${APP_DOMAIN}.${HOME_SERVER_DOMAIN},localhost,127.0.0.1 --cors-allowed-origins ${APP_DOMAIN}.${HOME_SERVER_DOMAIN},localhost,127.0.0.1
+      "
+    depends_on:
+      mlflow-db:
+        condition: service_healthy
+    networks:
+      - ${TRAEFIK_NETWORK}
+      - mlflow-net
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      MLFLOW_BACKEND_STORE_URI: ${MLFLOW_BACKEND_STORE_URI}
+      MLFLOW_ARTIFACTS_DESTINATION: ${MLFLOW_ARTIFACTS_DESTINATION}
+      MLFLOW_SERVER_ALLOW_ORIGIN: "*"
+      MLFLOW_SERVER_ENABLE_CORS: "true"
+    volumes:
+      - mlflow-artifacts:/mlartifacts
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_DOMAIN}.${HOME_SERVER_DOMAIN}`) || Host(`${APP_DOMAIN}.localhost`)"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=${APP_PORT}"
+      - "traefik.docker.network=${STACK_NAME}_${TRAEFIK_NETWORK}"
+      - "homepage.group=Data Science" # Group for this service on the homepage
+      - "homepage.name=MLflow" # Name of this service on the homepage
+      - "homepage.icon=mlflow.png" # Pick from https://github.com/homarr-labs/dashboard-icons
+      - "homepage.href=http://${APP_DOMAIN}.${HOME_SERVER_DOMAIN}/" # Link to access this service on the homepage
+      - "homepage.description=MLflow Tracking Server" # Description of this service on the homepage
+      - "nautical-backup.group=mlflow"
+      - "nautical-backup.source-dir-required=false"
+
+volumes:
+  mlflow-db:
+    driver: local
+  mlflow-artifacts:
+    driver: local
+
+networks:
+  mlflow-net:

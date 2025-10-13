@@ -33,3 +33,6 @@ include:
 - path: ../../Apps/Fusion/compose.yml
   env_file:
   - ../../Apps/Fusion/default.env
+- path: ../../Apps/MLflow/compose.yml
+  env_file:
+  - ../../Apps/MLflow/default.env

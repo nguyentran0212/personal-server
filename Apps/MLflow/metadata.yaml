@@ -1,0 +1,33 @@
+metadata:
+  name: MLflow
+  type: app
+  description: MLflow tracking server for experiment tracking and model management (v3.5.0rc0 with database and S3 adapters installed at runtime)
+  projectUrl: https://mlflow.org/
+
+userConfig:
+  - name: MLFLOW_DB_PASS
+    prompt: "Password for MLflow database"
+    type: string
+    default: "mlflow_db_password"
+  - name: MLFLOW_ARTIFACTS_DESTINATION
+    prompt: "MLflow artifacts destination (local path or S3 bucket URL, e.g., s3://my-bucket/path or http://minio:9000/bucket-name)"
+    type: string
+    default: "/mlartifacts"
+  - name: AWS_ACCESS_KEY_ID
+    prompt: "AWS Access Key ID (for S3 artifact store, leave empty if using local storage)"
+    type: string
+    default: ""
+  - name: AWS_SECRET_ACCESS_KEY
+    prompt: "AWS Secret Access Key (for S3 artifact store, leave empty if using local storage)"
+    type: string
+    default: ""
+  - name: AWS_DEFAULT_REGION
+    prompt: "AWS Region (for S3 artifact store, e.g., us-east-1, leave empty if using local storage)"
+    type: string
+    default: ""
+
+postInstall:
+  - "After starting the stack, access MLflow at https://mlflow.your_domain.com"
+  - "MLflow tracking server is now available for logging experiments and models"
+  - "Configure your MLflow clients with MLFLOW_TRACKING_URI=https://mlflow.your_domain.com"
+  - "If using S3 for artifact storage, ensure your credentials have appropriate permissions to the bucket"
