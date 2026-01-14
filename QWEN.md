@@ -19,7 +19,7 @@ The project enables composable server stacks using Docker and Docker Compose wit
 ## Technology Stack
 
 - **Python 3.10+**: Core CLI tool implementation
-- **Poetry**: Dependency management
+- **uv**: Dependency management
 - **Docker & Docker Compose**: Container orchestration
 - **Typer**: CLI framework
 - **PyYAML**: YAML processing
@@ -33,10 +33,10 @@ The project enables composable server stacks using Docker and Docker Compose wit
 git clone https://github.com/nguyentran0212/personal-server
 
 # Install CLI dependencies
-poetry install
+uv sync
 
 # Run servercraft CLI
-servercraft --help
+uv run servercraft --help
 ```
 
 ### Key Commands:
@@ -82,8 +82,8 @@ personal-server/
 ├── Assets/
 ├── Docs/
 ├── README.md
-├── pyproject.toml          # Poetry configuration
-└── poetry.lock
+├── pyproject.toml          # Standard Python project configuration (compatible with uv)
+└── uv.lock                 # uv lock file for dependency management
 ```
 
 Each app contains:

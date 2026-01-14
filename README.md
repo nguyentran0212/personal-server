@@ -44,12 +44,12 @@ Server Craft is an *opinionated* collection of "recipes" that can be combined to
 
 As a **user**, you can manage your server stacks using the `servercraft` CLI. Before you begin, ensure you have:
 - Docker Engine and Docker Compose installed.
-- Python 3.10 or newer and Poetry installed.
+- Python 3.10 or newer and uv installed.
 
 After cloning this repository, install the CLI dependencies:
 
 ```bash
-poetry install
+uv sync
 ```
 
 Run `servercraft --help` to see all available commands. Key commands include:
@@ -114,7 +114,7 @@ TRAEFIK_NETWORK="traefik-net" # Name of the network docker compose would create 
 Scaffold a new stack using the `servercraft` command:
 
 ```bash
-poetry run servercraft create my-local-stack
+uv run servercraft create my-local-stack
 ```
 
 This will:

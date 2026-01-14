@@ -1,17 +1,25 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "servercraft"
 version = "0.1.0"
 description = "CLI tool to automate Docker stack creation"
-authors = ["Your Name <you@example.com>"]
-license = "MIT"
+authors = [{name = "Your Name", email = "you@example.com"}]
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.1,<8.2",
+    "typer[all]>=0.10",
+    "PyYAML>=6.0",
+    "questionary>=1.10",
+    "python-dotenv>=1.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-click = ">=8.1,<8.2"
-typer = {extras = ["all"], version = "^0.10"}
-PyYAML = "^6.0"
-questionary = "^1.10"
-python-dotenv = "^1.0"
-
-[tool.poetry.scripts]
+[project.scripts]
 servercraft = "servercraft.main:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["servercraft*"]
