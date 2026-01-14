@@ -1,0 +1,7 @@
+# This stack contains security tools
+# 
+#
+include:
+  - path: "../../Apps/Vaultwarden/compose.yml" ## App with custom envs
+    env_file:
+       - ../../Apps/Vaultwarden/default.env
